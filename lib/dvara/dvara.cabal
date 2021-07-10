@@ -1,0 +1,57 @@
+name:                dvara
+version:             0.1
+synopsis:            OAuth2 server subsite for Yesod web apps
+description:
+  This library provides a subsite for Yesod web apps, implementing an OAuth2
+  server, and allows to use it for user authentication and authorization.
+homepage:            https://dev.angeley.es/s/fr33domlover/p/vervis
+bug-reports:         https://dev.angeley.es/s/fr33domlover/p/vervis/t
+license:             PublicDomain
+license-file:        COPYING
+author:              fr33domlover
+maintainer:          fr33domlover@riseup.net
+copyright:           ♡ Copying is an act of love. Please copy, reuse and share.
+category:            Network, Web, Yesod
+build-type:          Simple
+extra-source-files:  AUTHORS.md
+                     CHANGELOG.md
+                     COPYING
+                     README.md
+cabal-version:       >=1.10
+
+source-repository head
+  type:                darcs
+  location:            https://dev.angeley.es/s/fr33domlover/r/dvara
+
+library
+  exposed-modules:     Dvara
+  other-modules:       Dvara.Class
+                     , Dvara.Field
+                     , Dvara.Foundation
+                     , Dvara.Handler
+                     , Dvara.Migration
+                     , Dvara.Migration.Model
+                     , Dvara.Model
+                     , Dvara.Model.TH
+                     , Dvara.Types
+  build-depends:       aeson
+                     , base
+                     , base64-bytestring
+                     , cryptonite
+                     , http-types
+                     , network-uri
+                     , persistent
+                     , persistent-migration
+                     , persistent-template
+                     , shakespeare
+                     , template-haskell
+                     , text
+                     , time
+                     , transformers
+                     , yesod-auth
+                     , yesod-core
+                     , yesod-form
+                     , yesod-persistent
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+  ghc-options:         -Wall

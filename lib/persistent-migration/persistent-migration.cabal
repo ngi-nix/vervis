@@ -1,0 +1,62 @@
+name:                persistent-migration
+version:             0.1
+synopsis:            Specify DB migrations in terms of your persistent model
+description:
+  This library that lets you describe your DB migrations in terms of
+  `persistent` entities, and it handles the details of the `persistent` backend
+  for you. Whenever you change your `persistent` model, all you need to do is
+  to list a typed description of the change in the list of migrations, and the
+  library has everything else covered.
+  .
+  Currently only the SQL backend is supported, and only PostgreSQL (because
+  that's what I've been using), but it's perfectly possible to add typeclass
+  instances for other backends and database management systems.
+homepage:            https://dev.angeley.es/s/fr33domlover/p/vervis
+bug-reports:         https://dev.angeley.es/s/fr33domlover/p/vervis/t
+license:             PublicDomain
+license-file:        COPYING
+author:              fr33domlover
+maintainer:          fr33domlover@riseup.net
+copyright:           ♡ Copying is an act of love. Please copy, reuse and share.
+category:            Database
+build-type:          Simple
+extra-source-files:  AUTHORS.md
+                     ChangeLog.md
+                     COPYING
+                     INSTALL.md
+                     NEWS.md
+                     README.md
+cabal-version:       >=1.10
+
+source-repository head
+  type:                darcs
+  location:            https://dev.angeley.es/s/fr33domlover/r/persistent-migration
+
+library
+  exposed-modules:     Database.Persist.BackendDataType
+                       Database.Persist.Migration
+                       Database.Persist.Schema
+                       Database.Persist.Schema.PostgreSQL
+                       Database.Persist.Schema.SQL
+                       Database.Persist.Schema.TH
+                       Database.Persist.Schema.Types
+                       Database.Persist.Schema.Validate
+  other-modules:       Data.Proxy.Local
+                       Database.Persist.Migration.Actions
+                       Database.Persist.Schema.Parser
+                       Database.Persist.Schema.SQL.Internal
+  build-depends:       base
+                     , bytestring
+                     , conduit
+                     , containers
+                     , megaparsec
+                     , parser-combinators
+                     , persistent
+                     , persistent-template
+                     , template-haskell
+                     , text
+                     , th-lift-instances
+                     , transformers
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+  ghc-options:         -Wall

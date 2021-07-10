@@ -1,0 +1,116 @@
+name:                ssh
+version:             0.3.2
+synopsis:            A pure-Haskell SSH server library.
+description:
+    This a library for implementing your own servers that handle SSH
+    requests and authorization, etc. Similar to Python's Twisted Conch
+    library. It's used e.g. by Darcsden to provide basic SSH access.
+    .
+    Note that the internal modules aren't considered part of the stable API and
+    can change at any time. They can be useful for testing, but otherwise you
+    should probably avoid them or ask the maintainer to move some functions to
+    the public API.
+
+
+homepage:            http://hub.darcs.net/ganesh/ssh
+license:             BSD3
+license-file:        LICENSE
+author:              Alex Suraci <suraci.alex@gmail.com>
+maintainer:          Ganesh Sittampalam <ganesh@earth.li>
+category:            Network
+build-type:          Simple
+cabal-version:       >= 1.8
+stability:           Unstable
+tested-with:         GHC==7.8.2
+extra-source-files:  CHANGES,
+                     README,
+                     test/keys/host,
+                     test/keys/client/id_rsa_test,
+                     test/keys/client/id_rsa_test.pub,
+                     test/keys/client/id_rsa_test2,
+                     test/keys/client/id_rsa_test2.pub,
+                     test/keys/client/id_rsa_1024,
+                     test/keys/client/id_rsa_1024.pub,
+                     test/keys/client/id_rsa_2048,
+                     test/keys/client/id_rsa_2048.pub,
+                     test/keys/client/id_rsa_4096,
+                     test/keys/client/id_rsa_4096.pub,
+                     test/keys/client/id_dsa,
+                     test/keys/client/id_dsa.pub
+
+
+source-repository   head
+    type:           darcs
+    location:       http://hub.darcs.net/ganesh/ssh
+
+library
+  hs-source-dirs:   src
+  ghc-options:   -Wall -fno-warn-unused-do-bind
+
+  exposed-modules:  Network.SSH
+                    Network.SSH.Channel
+                    Network.SSH.Crypto
+                    Network.SSH.Session
+
+                    Network.SSH.Internal.Channel
+                    Network.SSH.Internal.Crypto
+                    Network.SSH.Internal.NetGet
+                    Network.SSH.Internal.NetPut
+                    Network.SSH.Internal.Random
+                    Network.SSH.Internal.Sender
+                    Network.SSH.Internal.Session
+
+  other-modules:    Network.SSH.Internal.Debug
+                    Network.SSH.Internal.Util
+
+  build-depends:    asn1-encoding,
+                    asn1-types,
+                    base,
+                    base64-string,
+                    binary,
+                    bytestring,
+                    cereal,
+                    containers,
+                    crypto-api,
+                    crypto-pubkey-types,
+                    cryptohash-cryptoapi,
+                    DRBG,
+                    HsOpenSSL,
+                    integer-gmp,
+                    monad-control,
+                    monadcryptorandom,
+                    network,
+                    process,
+                    RSA,
+                    random,
+                    SHA,
+                    SimpleAES,
+                    split,
+                    transformers,
+                    transformers-base,
+                    unliftio-core
+
+test-suite ssh-test
+  type: exitcode-stdio-1.0
+  hs-source-dirs: test
+  main-is:        test.hs
+  other-modules:  EmbedTree
+
+  ghc-options: -Wall -threaded
+
+  build-depends:
+      tasty                      >= 0.10  ,
+      tasty-hunit                >= 0.9   ,
+      tasty-quickcheck           >= 0.8   ,
+      HUnit                      >= 1.0   ,
+      QuickCheck                 >= 2.8   ,
+      libssh2                    >= 0.2   ,
+      filepath                   >= 1.3   ,
+      directory                  >= 1.2   ,
+      bytestring                 >= 0.10  ,
+      template-haskell           >= 2.8   ,
+      th-lift-instances          >= 0.1   ,
+      pseudomacros               >= 0.0   ,
+      containers,
+      base,
+      ssh

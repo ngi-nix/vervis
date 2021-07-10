@@ -22,7 +22,7 @@ mkdir -p lib
 cd lib
 for dep in $DEPS; do
     if [ -d "$dep" ]; then
-        darcs pull --repodir="$dep" --all
+        darcs pull -k --repodir="$dep" --all
     else
         darcs clone "$VERVIS/$dep"
     fi

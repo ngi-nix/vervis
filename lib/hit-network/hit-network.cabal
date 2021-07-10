@@ -1,0 +1,57 @@
+name:                hit-network
+version:             0.1
+synopsis:            Git protocol implementation in pure Haskell
+description:
+  This library implements the Git pack protocol, in pure Haskell. This is the
+  protocol used when connecting to remote repositories. The intention is to
+  provide out-of-the-box support for both client and server sides while
+  abstracting over the transport, and in particular support the following
+  transports:
+  .
+  * Plain TCP (i.e. the @git://@ protocol)
+  .
+  * HTTP(S)
+  .
+  * SSH
+homepage:            https://dev.angeley.es/s/fr33domlover/p/vervis
+bug-reports:         https://dev.angeley.es/s/fr33domlover/p/vervis/t
+license:             PublicDomain
+license-file:        COPYING
+author:              fr33domlover
+maintainer:          fr33domlover@riseup.net
+copyright:           ♡ Copying is an act of love. Please copy, reuse and share.
+category:            Network, Git, Development
+build-type:          Simple
+extra-source-files:  AUTHORS.md
+                     CHANGELOG.md
+                     COPYING
+                     README.md
+cabal-version:       >=1.10
+
+source-repository head
+  type:                darcs
+  location:            https://dev.angeley.es/s/fr33domlover/r/hit-network
+
+library
+  exposed-modules:     Network.Git.Transport.HTTP.Fetch.RefDiscovery
+                       Network.Git.Transport.HTTP.Fetch.UploadRequest
+                       Network.Git.Get
+                       Network.Git.Put
+                       Network.Git.Types
+  other-modules:       Control.Monad.Trans.Stream
+                       Data.Binary.Get.Local
+                       Data.Binary.Put.Local
+                       Data.Git.Local
+                       Paths_hit_network
+  -- other-extensions:    
+  build-depends:       base
+                     , binary
+                     , bytestring
+                     , containers
+                     , git
+                     , hit-graph
+                     , hit-harder
+                     , transformers
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+  ghc-options:         -Wall

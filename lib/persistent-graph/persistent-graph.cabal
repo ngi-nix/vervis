@@ -1,0 +1,74 @@
+name:                persistent-graph
+version:             0.1
+synopsis:            Representing, querying and editing graphs with Persistent
+description:
+  This library extends the functionality of the API provided in the
+  [persistent](https://hackage.haskell.org/package/persistent) package, with
+  the ability to represent graphs in persistent entities. The records are the
+  graph nodes, and a field that is a self reference (i.e. it's an ID referring
+  to a record in the same entity as the reference itself) is used for defining
+  graph edges. Persisent backends that support recursive queries (such as graph
+  databases, and some SQL databases, e.g. PostgreSQL) can then be used for
+  traversing the graph.
+  .
+  You can think of this library as
+  "[FGL](https://hackage.haskell.org/package/persistent) for persistent", i.e.
+  a graph library in which the manipulated graph is stored in a database.
+  .
+  It's useful for working with hierarchical data without having to write long
+  unreadable database-specific queries.
+  .
+  Note that persistent backends that don't support recursive queries can still
+  implement this interface, by reading the whole graph into memory and
+  performing graph algorithms on the Haskell side.
+  .
+  COPYING NOTE: While my code is in the public domain, this library contains
+  code under MIT which is copied from the persistent package.
+homepage:            https://dev.angeley.es/s/fr33domlover/p/vervis
+bug-reports:         https://dev.angeley.es/s/fr33domlover/p/vervis/t
+license:             PublicDomain
+license-file:        COPYING
+author:              fr33domlover
+maintainer:          fr33domlover@riseup.net
+copyright:           ♡ Copying is an act of love. Please copy, reuse and share.
+category:            Database, Graph
+build-type:          Simple
+extra-source-files:  AUTHORS.md
+                     CHANGELOG.md
+                     COPYING
+                     README.md
+cabal-version:       >=1.10
+
+source-repository head
+  type:                darcs
+  location:            https://dev.angeley.es/s/fr33domlover/r/persistent-graph
+
+library
+  exposed-modules:
+                       Database.Persist.Graph.Class
+                       Database.Persist.Graph.SQL
+                       Database.Persist.Sql.Graph.Connects
+                       Database.Persist.Sql.Graph.Cyclic
+                       Database.Persist.Sql.Graph.Path
+                       Database.Persist.Sql.Graph.Reachable
+                       Database.Persist.Sql.Graph.TransitiveReduction
+  other-modules:
+                       -- Database.Persist.Local.Class.PersistEntityHierarchy
+                       -- Database.Persist.Local.RecursionDoc
+                       Database.Persist.Local.Class.PersistEntityGraph
+                       Database.Persist.Local.Class.PersistQueryForest
+                       Database.Persist.Local.Class.PersistQueryGraph
+                       Database.Persist.Local.Sql
+                       Database.Persist.Local.Sql.Orphan.Common
+                       Database.Persist.Local.Sql.Orphan.PersistQueryForest
+  build-depends:       base
+                     , bytestring
+                     , conduit
+                     , mtl
+                     , persistent
+                     , resourcet
+                     , text
+                     , transformers
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+  ghc-options:         -Wall

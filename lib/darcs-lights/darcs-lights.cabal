@@ -1,0 +1,68 @@
+name:                darcs-lights
+version:             0.1
+synopsis:            Some tools for working with Darcs repos
+description:
+  The API is currently unstable and should be properly organized and
+  documented. But otherwise, basically, this library is an API for working with
+  Darcs repositories. It's a collection of tools I wrote for a repository
+  hosting web application. It's not polished right now and doesn't have its own
+  plan for a complete feature set. I just add stuff when I need it. But I hope
+  to gradually polish and document it, and maybe it can even be useful somehow
+  to the actual Darcs project.
+  .
+  In case you wonder how this library started, here's the story:
+  .
+  In 2016 I started working on a web application, and I wanted it to be able to
+  display some info about Darcs repositories. To avoid having to run the
+  @darcs@ program on every request, I went to the @darcs@ package to check if
+  some functions from there could help me. All the complicated type stuff there
+  scared me (and maybe still does haha), so I decided to try challenging myself
+  a bit as a novice Haskeller and wrote a little Attoparsec parser that
+  reads the information directly from the @_darcs/@ directory.
+homepage:            https://dev.angeley.es/s/fr33domlover/r/darcs-lights
+bug-reports:         https://dev.angeley.es/s/fr33domlover/p/vervis/t
+license:             PublicDomain
+license-file:        COPYING
+author:              fr33domlover
+maintainer:          fr33domlover@riseup.net
+copyright:           ♡ Copying is an act of love. Please copy, reuse and share.
+category:            Development, Darcs
+build-type:          Simple
+extra-source-files:
+  AUTHORS.md
+  CHANGELOG.md
+  COPYING
+  README.md
+cabal-version:       >=1.10
+
+source-repository head
+  type:                darcs
+  location:            https://dev.angeley.es/s/fr33domlover/r/darcs-lights
+
+library
+  exposed-modules:     Development.Darcs.Internal.Hash.Codec
+                     , Development.Darcs.Internal.Hash.Types
+                     , Development.Darcs.Internal.Inventory.Parser
+                     , Development.Darcs.Internal.Inventory.Read
+                     , Development.Darcs.Internal.Inventory.Types
+                     , Development.Darcs.Internal.Patch
+                     , Development.Darcs.Internal.Patch.Parser
+                     , Development.Darcs.Internal.Patch.Types
+  other-modules:       Control.Applicative.Local
+                     , Data.Attoparsec.ByteString.Local
+                     , Data.ByteString.Local
+                     , Data.Text.UTF8.Local
+  build-depends:       attoparsec
+                     , base
+                     , base16-bytestring
+                     , bytestring
+                     , bytestring-lexing
+                     , cryptonite
+                     , filepath
+                     , memory
+                     , text
+                     , time
+                     , zlib
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+  ghc-options:         -Wall

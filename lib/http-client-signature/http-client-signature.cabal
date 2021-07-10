@@ -1,0 +1,59 @@
+name:                http-client-signature
+version:             0.1
+synopsis:            Cryptographic signing of HTTP requests
+description:
+  HTTP request signing, providing origin authentication, message integrity and
+  replay resistance.
+homepage:            https://dev.angeley.es/s/fr33domlover/p/vervis
+bug-reports:         https://dev.angeley.es/s/fr33domlover/p/vervis/t
+license:             PublicDomain
+license-file:        COPYING
+author:              fr33domlover
+maintainer:          fr33domlover@riseup.net
+copyright:           ♡ Copying is an act of love. Please copy, reuse and share.
+category:            Network, Web, Cryptography
+build-type:          Simple
+extra-source-files:  AUTHORS.md
+                     CHANGELOG.md
+                     COPYING
+                     README.md
+cabal-version:       >=1.10
+
+source-repository head
+  type:                darcs
+  location:            https://dev.angeley.es/s/fr33domlover/r/http-client-signature
+
+library
+  exposed-modules:     Network.HTTP.Client.Signature
+  build-depends:       base
+                     , bytestring
+                     , case-insensitive
+                     , http-client
+                     , http-date
+                     , http-signature
+                     , http-types
+                     , time
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+  ghc-options:         -Wall
+
+test-suite test
+  main-is:             Test.hs
+  build-depends:       base
+                     , bytestring
+                     , case-insensitive
+                     , cryptonite
+                     , http-client
+                     , http-client-signature
+                     , http-signature
+                     , http-types
+                     , memory
+                     , network-uri
+                     , time
+                     , transformers
+                     , wai
+                     , warp
+  hs-source-dirs:      test
+  default-language:    Haskell2010
+  ghc-options:         -Wall
+  type:                exitcode-stdio-1.0

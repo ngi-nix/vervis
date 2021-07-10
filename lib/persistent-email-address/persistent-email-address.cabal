@@ -1,0 +1,36 @@
+name:                persistent-email-address
+version:             0.1
+synopsis:            Use EmailAddress from email-validate in your DB
+description:
+  This is a tiny library with orphan instances for the @EmailAddress@ type from
+  @email-validate@ package, allowing it to be used as a Persistent field.
+homepage:            https://dev.angeley.es/s/fr33domlover/r/persistent-email-address
+bug-reports:         https://dev.angeley.es/s/fr33domlover/p/vervis/t
+license:             PublicDomain
+license-file:        COPYING
+author:              fr33domlover
+maintainer:          fr33domlover@riseup.net
+copyright:           ♡ Copying is an act of love. Please copy, reuse and share.
+category:            Database
+build-type:          Simple
+extra-source-files:
+  AUTHORS.md
+  CHANGELOG.md
+  COPYING
+  README.md
+cabal-version:       >=1.10
+
+source-repository head
+  type:                darcs
+  location:            https://dev.angeley.es/s/fr33domlover/r/persistent-email-address
+
+library
+  exposed-modules:     Database.Persist.EmailAddress
+  build-depends:       base
+                     , bytestring
+                     , email-validate
+                     , persistent
+                     , text
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+  ghc-options:         -Wall

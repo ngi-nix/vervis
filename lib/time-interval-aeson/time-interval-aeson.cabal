@@ -1,0 +1,40 @@
+name:                time-interval-aeson
+version:             0.1
+synopsis:            Specify time intervals in JSON and YAML
+description:
+  When you specify time intervals in Haskell code, you can use the datatypes in
+  the @time-units@ package. But often application settings and other data is
+  parsed from external files, such as YAML config files, and then we're back to
+  plain integers. This package provides typeclass instances for use with
+  @aeson@, allowing to conveniently specify time intervals in JSON and YAML, as
+  a pair of a number and a time unit.
+homepage:            https://dev.angeley.es/s/fr33domlover/r/time-interval-aeson
+bug-reports:         mailto:fr33domlover@riseup.net
+license:             PublicDomain
+license-file:        COPYING
+author:              fr33domlover
+maintainer:          fr33domlover@riseup.net
+copyright:           ♡ Copying is an act of love. Please copy, reuse and share.
+category:            Data, Time, Text, JSON
+build-type:          Simple
+extra-source-files:
+  AUTHORS.md
+  CHANGELOG.md
+  COPYING
+  README.md
+cabal-version:       >=1.10
+
+source-repository head
+  type:                darcs
+  location:            https://dev.angeley.es/s/fr33domlover/r/time-interval-aeson
+
+library
+  exposed-modules:     Data.Time.Interval.Aeson
+  build-depends:       aeson
+                     , base
+                     , text
+                     , time-interval
+                     , time-units
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+  ghc-options:         -Wall

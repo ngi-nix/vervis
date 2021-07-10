@@ -1,0 +1,41 @@
+name:                hit-graph
+version:             0.1
+synopsis:            Use graph algorithms to access and manipulate Git repos
+description:
+  This library contains utilities for loading Git repo data into a graph, and
+  using graph algorithms to extract useful information, and perhaps even modify
+  the repo in interesting ways.
+homepage:            https://dev.angeley.es/s/fr33domlover/p/vervis
+bug-reports:         https://dev.angeley.es/s/fr33domlover/p/vervis/t
+license:             PublicDomain
+license-file:        COPYING
+author:              fr33domlover
+maintainer:          fr33domlover@riseup.net
+copyright:           ♡ Copying is an act of love. Please copy, reuse and share.
+category:            Graphs, Git, Development
+build-type:          Simple
+extra-source-files:  AUTHORS.md
+                     CHANGELOG.md
+                     COPYING
+                     README.md
+cabal-version:       >=1.10
+
+source-repository head
+  type:                darcs
+  location:            https://dev.angeley.es/s/fr33domlover/r/hit-graph
+
+library
+  exposed-modules:     Data.Git.Graph
+                       Data.Graph.Inductive.Query.Topsort
+  -- other-modules:       
+  -- other-extensions:    
+  build-depends:       base
+                     , containers
+                     , fgl
+                     , hashable
+                     , git
+                     , hit-harder
+                     , unordered-containers
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+  ghc-options:         -Wall
