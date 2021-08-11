@@ -1,0 +1,67 @@
+Discussion
+
+FollowerSet
+
+OutboxItem
+
+RemoteActor
+
+RemoteActivity
+
+RemoteObject
+
+RemoteDiscussion
+
+Ticket
+
+LocalTicket
+    ticket    TicketId
+    discuss   DiscussionId
+    followers FollowerSetId
+
+    UniqueLocalTicket           ticket
+    UniqueLocalTicketDiscussion discuss
+    UniqueLocalTicketFollowers  followers
+
+TicketContextLocal
+    ticket  TicketId
+    accept  OutboxItemId
+
+    UniqueTicketContextLocal       ticket
+    UniqueTicketContextLocalAccept accept
+
+TicketAuthorRemote
+    ticket TicketContextLocalId
+    author RemoteActorId
+    open   RemoteActivityId
+
+    UniqueTicketAuthorRemote     ticket
+    UniqueTicketAuthorRemoteOpen open
+
+RemoteTicket
+    ticket  TicketAuthorRemoteId
+    ident   RemoteObjectId
+    discuss RemoteDiscussionId
+
+    UniqueRemoteTicket        ticket
+    UniqueRemoteTicketIdent   ident
+    UniqueRemoteTicketDiscuss discuss
+
+LocalTicketDependency
+    parent  TicketId
+    child   TicketId
+    created UTCTime
+
+    UniqueLocalTicketDependency parent child
+
+TicketDependencyChildLocal
+    dep   LocalTicketDependencyId
+    child LocalTicketId
+
+    UniqueTicketDependencyChildLocal dep
+
+TicketDependencyChildRemote
+    dep   LocalTicketDependencyId
+    child RemoteObjectId
+
+    UniqueTicketDependencyChildRemote dep

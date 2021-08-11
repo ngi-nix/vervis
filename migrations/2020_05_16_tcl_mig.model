@@ -1,0 +1,19 @@
+Ticket
+
+Project
+
+OutboxItem
+
+TicketContextLocal
+    ticket  TicketId
+    project ProjectId
+    accept  OutboxItemId
+
+    UniqueTicketContextLocal       ticket
+    UniqueTicketContextLocalAccept accept
+
+TicketProjectLocal
+    context TicketContextLocalId
+    project ProjectId
+
+    UniqueTicketProjectLocal context

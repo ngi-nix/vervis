@@ -1,0 +1,108 @@
+$# This file is part of Vervis.
+$#
+$# Written in 2016, 2018, 2019 by fr33domlover <fr33domlover@riseup.net>.
+$#
+$# ♡ Copying is an act of love. Please copy, reuse and share.
+$#
+$# The author(s) have dedicated all copyright and related and neighboring
+$# rights to this software to the public domain worldwide. This software is
+$# distributed without any warranty.
+$#
+$# You should have received a copy of the CC0 Public Domain Dedication along
+$# with this software. If not, see
+$# <http://creativecommons.org/publicdomain/zero/1.0/>.
+
+$maybe (s, j, w, sw) <- mproject
+  <p>
+    Belongs to project
+    <a href=@{ProjectR (sharerIdent s) (projectIdent j)}>
+      $maybe name <- projectName j
+        #{name}
+      $nothing
+        #{prj2text $ projectIdent j}
+
+  ^{personNavW $ sharerIdent s}
+
+  ^{projectNavW j w sw (sharerIdent s) (projectIdent j)}
+
+$maybe desc <- repoDesc repository
+  <p>#{desc}
+
+^{personNavW user}
+
+<div>
+  <span>
+    [[ 🗃
+    <a href=@{RepoR user repo}>
+      #{rp2text repo}
+    ]] ::
+  <span>
+    <a href=@{RepoInboxR user repo}>
+      [📥 Inbox]
+  <span>
+    <a href=@{RepoOutboxR user repo}>
+      [📤 Outbox]
+  <span>
+    <a href=@{RepoFollowersR user repo}>
+      [🐤 Followers]
+  <span>
+    <a href=@{RepoDevsR user repo}>
+      [🤝 Collaborators]
+  <span>
+    <a href=@{RepoHeadChangesR user repo}>
+      [🛠 Commits]
+
+^{followButton}
+
+<h2>Branches
+
+<ul>
+$forall branch <- branches
+  <li>
+    <a href=@{RepoSourceR user repo [branch]}>#{branch}
+
+<h2>Tags
+
+<ul>
+$forall tag <- tags
+  <li>
+    <a href=@{RepoSourceR user repo [tag]}>#{tag}
+
+<div>
+  <a href=@{RepoSourceR user repo [ref]}>#{ref}
+  :: #
+  $forall (piece, piecePath) <- dirs
+    <a href=@{RepoSourceR user repo (ref : piecePath)}>#{piece}
+    / #
+
+$case sv
+  $of SourceFile (FileView name body)
+    <h2>#{name}
+    ^{body}
+  $of SourceDir (DirectoryView mname ents mreadme)
+    <h2>#{fromMaybe "Files" mname}
+    $if null ents
+      <p>No files!
+    $else
+      <table>
+        $forall DirEntry type' name <- ents
+          <tr>
+            <td>
+              $case type'
+                $of TypeBlob
+                  🗎
+                $of TypeTree
+                  🗀
+            <td>
+              <a href=@{RepoSourceR user repo (ref : (dir ++ [name]))}>
+                #{name}
+    $maybe (readmeName, readmeWidget) <- mreadme
+      <h2>#{readmeName}
+      ^{readmeWidget}
+
+<div>
+  ^{buttonW DELETE "Delete this repo" (RepoR user repo)}
+
+<div>
+  <a href=@?{(RepoR user repo, [("prettyjson","true")])}>
+    [See repo JSON]

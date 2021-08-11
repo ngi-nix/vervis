@@ -1,0 +1,57 @@
+/* This file is part of Vervis.
+ *
+ * Written in 2016, 2020 by fr33domlover <fr33domlover@riseup.net>,
+ *            2019       by Jason Harrer <jazzyeagle79@gmail.com>.
+ *
+ * ♡ Copying is an act of love. Please copy, reuse and share.
+ *
+ * The author(s) have dedicated all copyright and related and neighboring
+ * rights to this software to the public domain worldwide. This software is
+ * distributed without any warranty.
+ *
+ * You should have received a copy of the CC0 Public Domain Dedication along
+ * with this software. If not, see
+ * <http://creativecommons.org/publicdomain/zero/1.0/>.
+ */
+
+.#{cNew}
+    color: #{dark yellow}
+
+.#{cTodo}
+    color: #{dark red}
+
+.#{cClosed}
+    color: #{dark green}
+
+.ticket-status-column
+  grid-column: 1 / 1
+
+.ticket-number-column
+  grid-column: 2 / 2
+
+.ticket-date-column
+  grid-column: 3 / 3
+
+.ticket-sharer-column
+  grid-column: 4 / 4
+
+.ticket-title-column
+  grid-column: 5 / 5
+
+.ticket-tree-column
+  grid-column: 6 / 6
+
+.ticket-node-column
+  grid-column: 7 / 7
+
+.label1
+    color: #{light red}
+
+.label2
+    color: #{light green}
+
+.label3
+    color: #{light yellow}
+
+.label4
+    color: #{light blue}

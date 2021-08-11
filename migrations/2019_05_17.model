@@ -1,0 +1,5 @@
+RemoteCollection
+    instance   InstanceId
+    ident      Text
+
+    UniqueRemoteCollection instance ident

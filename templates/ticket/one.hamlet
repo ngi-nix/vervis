@@ -1,0 +1,128 @@
+$# This file is part of Vervis.
+$#
+$# Written in 2016, 2018, 2019, 2020 by fr33domlover <fr33domlover@riseup.net>.
+$#
+$# ♡ Copying is an act of love. Please copy, reuse and share.
+$#
+$# The author(s) have dedicated all copyright and related and neighboring
+$# rights to this software to the public domain worldwide. This software is
+$# distributed without any warranty.
+$#
+$# You should have received a copy of the CC0 Public Domain Dedication along
+$# with this software. If not, see
+$# <http://creativecommons.org/publicdomain/zero/1.0/>.
+
+<h2>#{preEscapedToHtml $ ticketTitle ticket}
+
+<div>
+  Created on #{showDate $ ticketCreated ticket} by
+  ^{sharerLinkFedW author}
+
+<div>
+  <span>
+    <a href=@{ProjectTicketParticipantsR shar proj ltkhid}>
+      [🐤 Followers]
+  <span>
+    <a href=@{ProjectTicketDepsR shar proj ltkhid}>
+      [⤴ Dependencies]
+  <span>
+    <a href=@{ProjectTicketReverseDepsR shar proj ltkhid}>
+      [⤷ Dependants]
+  <span>
+    <a href=@{ClaimRequestsTicketR shar proj ltkhid}>
+      [✋ Claim requests]
+  <span>
+    <a href=@{ProjectTicketEditR shar proj ltkhid}>
+      [✏ Edit]
+
+^{followButton}
+
+<div>^{desc}
+
+$if ticketStatus ticket /= TSClosed
+  <p>
+    $maybe (assignee, me) <- massignee
+      $if me
+        Assigned to you.
+
+        ^{buttonW POST "Unclaim this ticket" (ProjectTicketUnclaimR shar proj ltkhid)}
+      $else
+        Assigned to ^{sharerLinkW assignee}.
+
+        ^{buttonW POST "Unassign this ticket" (ProjectTicketUnassignR shar proj ltkhid)}
+    $nothing
+      Not assigned.
+
+      <a href=@{ClaimRequestNewR shar proj ltkhid}>Ask to have it assigned to you
+
+      or
+
+      ^{buttonW POST "Claim this ticket" (ProjectTicketClaimR shar proj ltkhid)}
+
+      or
+
+      <a href=@{ProjectTicketAssignR shar proj ltkhid}>Assign to someone else
+      .
+
+<p>
+  Status: #
+  $case ticketStatus ticket
+    $of TSNew
+      Open, new.
+
+      ^{buttonW POST "Accept this ticket" (ProjectTicketAcceptR shar proj ltkhid)}
+      ^{buttonW POST "Close this ticket" (ProjectTicketCloseR shar proj ltkhid)}
+    $of TSTodo
+      Open, to do.
+
+      ^{buttonW POST "Close this ticket" (ProjectTicketCloseR shar proj ltkhid)}
+    $of TSClosed
+      Closed on ___ by ___.
+
+      ^{buttonW POST "Reopen this ticket" (ProjectTicketOpenR shar proj ltkhid)}
+
+
+<h3>Custom fields
+
+<ul>
+  $forall TicketTextParam field mvalue <- tparams
+    <li .#{relevant $ wfsFilter field}>
+      <a href=@{WorkflowFieldR wshr wfl $ wfsIdent field}>
+        #{wfsName field}
+      :
+      $maybe value <- mvalue
+        #{ttpvVal value}
+      $nothing
+        $if wfsRequired field
+          NO VALUE FOR REQUIRED FIELD
+        $else
+          (none)
+  $forall TicketEnumParam field enum mvalue <- eparams
+    <li .#{relevant $ wfsFilter field}>
+      <a href=@{WorkflowFieldR wshr wfl $ wfsIdent field}>
+        #{wfsName field}
+      :
+      $maybe value <- mvalue
+        <a href=@{WorkflowEnumCtorsR wshr wfl $ wesIdent enum}>
+          #{tepvName value}
+      $nothing
+        $if wfsRequired field
+          NO VALUE FOR REQUIRED FIELD
+        $else
+          (none)
+  $forall TicketClassParam field mvalue <- cparams
+    <li .#{relevant $ wfsFilter field}>
+      <a href=@{WorkflowFieldR wshr wfl $ wfsIdent field}>
+        #{wfsName field}
+      :
+      $maybe _tpcid <- mvalue
+        Yes
+      $nothing
+        No
+
+<p>
+  ^{buttonW DELETE "Delete this ticket" (ProjectTicketR shar proj ltkhid)}
+
+<h3>Discussion
+
+^{discuss}

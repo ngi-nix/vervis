@@ -1,0 +1,44 @@
+$# This file is part of Vervis.
+$#
+$# Written in 2019, 2020 by fr33domlover <fr33domlover@riseup.net>.
+$#
+$# ♡ Copying is an act of love. Please copy, reuse and share.
+$#
+$# The author(s) have dedicated all copyright and related and neighboring
+$# rights to this software to the public domain worldwide. This software is
+$# distributed without any warranty.
+$#
+$# You should have received a copy of the CC0 Public Domain Dedication along
+$# with this software. If not, see
+$# <http://creativecommons.org/publicdomain/zero/1.0/>.
+
+<div>
+  <span>
+  [[ 🧙
+  <a href=@{SharerR shr}>
+    #{shr2text shr}
+  ]] ::
+  <span>
+    <a href=@{SharerInboxR shr}>
+      [📥 Inbox]
+  <span>
+    <a href=@{SharerOutboxR shr}>
+      [📤 Outbox]
+  <span>
+    <a href=@{SharerFollowersR shr}>
+      [🐤 Followers]
+  <span>
+    <a href=@{SharerFollowingR shr}>
+      [🐔 Following]
+  <span>
+    <a href=@{ProjectsR shr}>
+      [🏗 Projects]
+  <span>
+    <a href=@{ReposR shr}>
+      [🗃 Repositories]
+  <span>
+    <a href=@{WorkflowsR shr}>
+      [🔁 Workflows]
+  <span>
+    <a href=@{SharerTicketsR shr}>
+      [🐛 Tickets]

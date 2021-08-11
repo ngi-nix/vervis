@@ -1,0 +1,46 @@
+$# This file is part of Vervis.
+$#
+$# Written in 2016, 2018, 2020 by fr33domlover <fr33domlover@riseup.net>.
+$#
+$# ♡ Copying is an act of love. Please copy, reuse and share.
+$#
+$# The author(s) have dedicated all copyright and related and neighboring
+$# rights to this software to the public domain worldwide. This software is
+$# distributed without any warranty.
+$#
+$# You should have received a copy of the CC0 Public Domain Dedication along
+$# with this software. If not, see
+$# <http://creativecommons.org/publicdomain/zero/1.0/>.
+
+<p>
+  ^{buttonW DELETE "Delete this field" (WorkflowFieldR shr wfl fld)}
+
+<ul>
+  <li>
+    Display name: #{workflowFieldName f}
+  <li>
+    Description: #{fromMaybe "(none)" $ workflowFieldDesc f}
+  <li>
+    Type:
+    $case e
+      $of Left typ
+        #{show typ}
+      $of Right enum
+        <a href=@{WorkflowEnumR shr wfl $ workflowEnumIdent enum}>
+          #{workflowEnumName enum}
+  <li>
+    Required: #{workflowFieldRequired f}
+  <li>
+    Constant: #{workflowFieldConstant f}
+  <li>
+    Applies to New tickets: #{workflowFieldFilterNew f}
+  <li>
+    Applies to Todo tickets: #{workflowFieldFilterTodo f}
+  <li>
+    Applies to Closed tickets: #{workflowFieldFilterClosed f}
+  <li>
+    Color:
+    $maybe c <- workflowFieldColor f
+      #{c}
+    $nothing
+      None

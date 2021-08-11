@@ -1,0 +1,104 @@
+$# This file is part of Vervis.
+$#
+$# Written in 2018, 2019 by fr33domlover <fr33domlover@riseup.net>.
+$#
+$# ♡ Copying is an act of love. Please copy, reuse and share.
+$#
+$# The author(s) have dedicated all copyright and related and neighboring
+$# rights to this software to the public domain worldwide. This software is
+$# distributed without any warranty.
+$#
+$# You should have received a copy of the CC0 Public Domain Dedication along
+$# with this software. If not, see
+$# <http://creativecommons.org/publicdomain/zero/1.0/>.
+
+<table>
+  <tr>
+    <td>By
+    <td>
+      $maybe sharer <- msharerWritten
+        ^{sharerLinkW sharer}
+      $nothing
+        #{authorName author}
+      $maybe (committer, _) <- patchCommitted patch
+        ;
+        $maybe sharer <- msharerCommitted
+          ^{sharerLinkW sharer}
+        $nothing
+          #{authorName committer}
+  <tr>
+    <td>At
+    <td>
+      #{showDate written}
+      $maybe (_, committed) <- patchCommitted patch
+        ; #{showDate committed}
+  <tr>
+    <td>Title
+    <td>#{patchTitle patch}
+  <tr>
+    <td>Description
+    <td>
+      <p>#{patchDescription patch}
+
+$if null parents
+  <ul>
+    $forall edit <- patchDiff patch
+      <li>
+        $case edit
+          $of AddTextFile path mode lines
+            <p>Add file #{path} #{mode}
+            <table .lines>
+              $forall (n, t) <- number lines
+                <tr>
+                  <td>+
+                  <td>#{n}
+                  <td>#{t}
+          $of AddBinaryFile path mode size
+            <p>Add binary file #{path} #{mode} #{size}
+          $of RemoveTextFile path mode lines
+            <p>Remove file #{path} #{mode}
+            <table .lines>
+              $forall (n, t) <- number lines
+                <tr>
+                  <td>-
+                  <td>#{n}
+                  <td>#{t}
+          $of RemoveBinaryFile path mode size
+            <p>Remove binary file #{path} #{mode} #{size}
+          $of MoveFile oldPath oldMode newPath newMode
+            <p>Move file #{oldPath} #{oldMode} → #{newPath} #{newMode}
+          $of ChmodFile path old new
+            <p>Change file mode #{path} #{old} → #{new}
+          $of EditTextFile path orig hunks oldMode newMode
+            <p>Edit file #{path} #{oldMode} → #{newMode}
+            ^{inlineDiffW orig hunks}
+          $of EditBinaryFile path oldSize oldMode newSize newMode
+            <p>
+              Edit binary file #{path} #{oldSize} #{oldMode} →
+              #{newSize} #{newMode}
+          $of TextToBinary path lines oldMode newSize newMode
+            <p>Edit file #{path} #{oldMode} → #{newSize} #{newMode}
+            <table .lines>
+              $forall (n, t) <- number lines
+                <tr>
+                  <td>-
+                  <td>#{n}
+                  <td>#{t}
+          $of BinaryToText path oldSize oldMode lines newMode
+            <p>Edit file #{path} #{oldMode} #{oldSize} → #{newMode}
+            <table .lines>
+              $forall (n, t) <- number lines
+                <tr>
+                  <td>+
+                  <td>#{n}
+                  <td>#{t}
+$else
+  <p>
+    This commit has multiple parents, and to be honest, I'm unsure how exactly
+    to decide against which one to run the diff. Do I just pick the first
+    parent? Or otherwise somehow detect which one is the right one? Advice is
+    very welcome. For now, to help me find and observe such cases, I'm just
+    listing here the parents of the commit:
+  <ol>
+    $forall parent <- parents
+      <li>#{parent}

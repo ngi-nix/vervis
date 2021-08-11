@@ -1,0 +1,13 @@
+ProjectRole
+
+Project
+    collabUser ProjectRoleId Maybe
+    collabAnon ProjectRoleId Maybe
+
+ProjectCollabAnon
+    project ProjectId
+    role    ProjectRoleId
+
+ProjectCollabUser
+    project ProjectId
+    role    ProjectRoleId

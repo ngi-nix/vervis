@@ -1,0 +1,8 @@
+LocalTicket
+    ticket    TicketId
+    discuss   DiscussionId
+    followers FollowerSetId
+
+    UniqueLocalTicket           ticket
+    UniqueLocalTicketDiscussion discuss
+    UniqueLocalTicketFollowers  followers

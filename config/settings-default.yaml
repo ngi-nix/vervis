@@ -1,0 +1,173 @@
+# Values formatted like "_env:ENV_VAR_NAME:default_value" can be overridden by
+# the specified environment variable. See the Yesod wiki, Configuration page.
+
+###############################################################################
+# HTTP server
+###############################################################################
+
+# any IPv4 host
+host:           "_env:HOST:*4"
+
+# The port `yesod devel` uses is distinct from this value. Set the
+# `yesod devel` port from the command line.
+http-port:      "_env:PORT:3000"
+
+ip-from-header: "_env:IP_FROM_HEADER:false"
+
+# The instance's host (e.g. "dev.angeley.es"). Used for determining which
+# requests are federated and which are for this instance, and for generating
+# URLs. The database relies on this value, and you shouldn't change it once
+# you deploy an instance.
+instance-host:  "_env:INSTANCE_HOST:localhost"
+
+# Encryption key file for encrypting the session cookie sent to clients
+client-session-key:     config/client_session_key.aes
+
+# How much time after the last request it takes for the session cookie to
+# expire
+client-session-timeout:
+  amount:               2
+  unit:                 hours
+
+# Maximal accepted time difference between request date and current time, when
+# performing this check during HTTP signature verification
+request-time-limit:
+  amount:               5
+  unit:                 minutes
+
+# How often to generate a new actor key for HTTP-signing requests
+actor-key-rotation:
+  amount:               1
+  unit:                 days
+
+###############################################################################
+# Development
+###############################################################################
+
+# Optional values with the following production defaults.
+# In development, they default to the inverse.
+#
+# development: false
+# detailed-logging: false
+# should-log-all: false
+# mutable-static: false
+
+# load-font-from-lib-data: false
+
+###############################################################################
+# SQL database
+###############################################################################
+
+# If you need a numeric value (e.g. 123) to parse as a String, wrap it in
+# single quotes (e.g. "_env:PGPASS:'123'"). See the Yesod wiki, Configuration
+# page.
+
+database:
+  user:     "_env:PGUSER:vervis_dev"
+  password: "_env:PGPASS:vervis_dev_password"
+  host:     "_env:PGHOST:localhost"
+  port:     "_env:PGPORT:5432"
+  database: "_env:PGDATABASE:vervis_dev"
+  poolsize: "_env:PGPOOLSIZE:10"
+
+max-instance-keys:  2
+max-actor-keys:     2
+
+###############################################################################
+# Version control repositories
+###############################################################################
+
+repo-dir:           repos
+diff-context-lines: 5
+#post-receive-hook:  /home/joe/.local/bin/vervis-post-receive
+#post-apply-hook:    /home/joe/.local/bin/vervis-post-apply
+
+###############################################################################
+# SSH server
+###############################################################################
+
+ssh-port:     5022
+ssh-key-file: config/ssh-host-key
+
+###############################################################################
+# Accounts
+###############################################################################
+
+registration: false
+max-accounts: 3
+
+# Whether to verify users' email addresses by sending them email with a
+# verification link. If not set below, the default is not to verify in
+# development, and to verify otherwise.
+#email-verification: true
+
+###############################################################################
+# Mail
+###############################################################################
+
+# Optional SMTP server settings for sending email. If not provided, no email
+# will be sent. The login field is optional, provide if you need SMTP
+# authentication.
+
+# mail:
+#   smtp:
+#     login:
+#       user:     "_env:SMTPUSER:vervis_dev"
+#       password: "_env:SMTPPASS:vervis_dev_password"
+#     host:       "_env:SMTPHOST:localhost"
+#     port:       "_env:SMTPPORT:587"
+#   sender:
+#     name:       "_env:SENDERNAME:vervis"
+#     email:      "_env:SENDEREMAIL:vervis@vervis.vervis"
+#   allow-reply:  false
+
+###############################################################################
+# Federation
+###############################################################################
+
+# Whether to support federation. This includes:
+#
+# * Accept activities from other servers in the inbox
+# * Accept activities from users in the outbox
+# * Deliver local activities to other servers
+federation:             false
+
+# Signing key file for signing object capabilities sent to remote users
+capability-signing-key: config/capability_signing_key
+
+# Salt file for encoding and decoding hashids
+hashids-salt-file:      config/hashids_salt
+
+# Whether to reject an HTTP signature when we want to insert a new key or usage
+# record but reached the limit setting
+reject-on-max-keys:     true
+
+# The duration of time during which a remote actor is unreachable and we
+# periodically retry to deliver them activities. After that period of time, we
+# stop trying to deliver and we remove them from follower lists of local
+# actors.
+drop-delivery-after:
+  amount:               25
+  unit:                 weeks
+
+# How often to retry failed deliveries
+retry-delivery-every:
+  amount:               1
+  unit:                 hours
+
+# How many activities to remember in the debug report list, showing latest
+# activities received in local inboxes and the result of their processing.
+# 'null' means disable the report page entirely.
+#activity-debug-reports: 10
+
+# List of (hosts of) other known federating instances.
+#instances:              []
+
+###############################################################################
+# User interface
+###############################################################################
+
+# Default color scheme for syntax highlighing of code blocks inside rendered
+# documents. The available styles are listed in the "Text.Pandoc.Highlighting"
+# module documentation.
+highlight-style:        zenburn

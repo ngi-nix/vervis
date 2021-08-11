@@ -1,0 +1,21 @@
+RemoteActor
+
+RemoteActivity
+
+Project
+
+Forwarding
+    recipient   RemoteActorId
+    activity    RemoteActivityId
+    activityRaw ByteString
+    sender      ProjectId
+    signature   ByteString
+    running     Bool
+
+    UniqueForwarding recipient activity
+
+ForwarderProject
+    task   ForwardingId
+    sender ProjectId
+
+    UniqueForwarderProject task

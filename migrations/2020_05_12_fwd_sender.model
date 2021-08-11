@@ -1,0 +1,11 @@
+ForwarderSharer
+    task   ForwardingId
+    sender SharerId
+
+    UniqueForwarderSharer task
+
+ForwarderProject
+    task   ForwardingId
+    sender ProjectId
+
+    UniqueForwarderProject task

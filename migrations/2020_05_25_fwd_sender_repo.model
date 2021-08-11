@@ -1,0 +1,5 @@
+ForwarderRepo
+    task   ForwardingId
+    sender RepoId
+
+    UniqueForwarderRepo task

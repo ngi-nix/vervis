@@ -1,0 +1,73 @@
+Sharer
+    ident   ShrIdent
+    name    Text     Maybe
+    created UTCTime
+
+    UniqueSharer ident
+
+Outbox
+
+OutboxItem
+    outbox    OutboxId
+    activity  PersistJSONObject
+    published UTCTime
+
+Inbox
+
+FollowerSet
+
+Project
+    ident      PrjIdent
+    sharer     SharerId
+    name       Text          Maybe
+    desc       Text          Maybe
+    workflow   WorkflowId
+    nextTicket Int
+    wiki       Int64         Maybe
+    collabUser Int64         Maybe
+    collabAnon Int64         Maybe
+    inbox      InboxId
+    outbox     OutboxId
+    followers  FollowerSetId
+
+    UniqueProject ident sharer
+    UniqueProjectInbox inbox
+    UniqueProjectOutbox outbox
+    UniqueProjectFollowers followers
+
+Workflow
+    sharer SharerId
+    ident  WflIdent
+    name   Text          Maybe
+    desc   Text          Maybe
+    scope  WorkflowScope
+
+    UniqueWorkflow sharer ident
+
+Ticket
+    number      Int           Maybe
+    created     UTCTime
+    title       Text                -- HTML
+    source      Text                -- Pandoc Markdown
+    description Text                -- HTML
+    assignee    Int64         Maybe
+    status      Text
+    closed      UTCTime
+    closer      Int64         Maybe
+
+TicketProjectLocal
+    ticket  TicketId
+    project ProjectId
+    accept  OutboxItemId
+
+    UniqueTicketProjectLocal       ticket
+    UniqueTicketProjectLocalAccept accept
+
+TicketAuthorRemote
+    ticket TicketId
+    ticketNew TicketProjectLocalId
+    author Int64
+    offer  Int64
+
+    UniqueTicketAuthorRemote ticket
+    UniqueTicketAuthorRemoteOffer offer

@@ -1,0 +1,37 @@
+Discussion
+
+FollowerSet
+
+Project
+
+Person
+
+OutboxItem
+
+Ticket
+    project     ProjectId
+    number      Int           Maybe
+    created     UTCTime
+    title       Text                -- HTML
+    source      Text                -- Pandoc Markdown
+    description Text                -- HTML
+    assignee    PersonId      Maybe
+    status      Text
+    closed      UTCTime
+    closer      PersonId      Maybe
+    discuss     DiscussionId
+    followers   FollowerSetId
+    accept      OutboxItemId
+
+    UniqueTicketDiscussion discuss
+    UniqueTicketFollowers  followers
+    UniqueTicketAccept     accept
+
+LocalTicket
+    ticket    TicketId
+    discuss   DiscussionId
+    followers FollowerSetId
+
+    UniqueLocalTicket           ticket
+    UniqueLocalTicketDiscussion discuss
+    UniqueLocalTicketFollowers  followers

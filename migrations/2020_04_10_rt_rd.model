@@ -1,0 +1,27 @@
+Instance
+    host Host
+
+    UniqueInstance host
+
+RemoteObject
+    instance InstanceId
+    ident    LocalURI
+
+    UniqueRemoteObject instance ident
+
+RemoteTicket
+    ticket  Int64
+    ident   RemoteObjectId
+    discuss RemoteDiscussionId
+
+    UniqueRemoteTicket      ticket
+    UniqueRemoteTicketIdent ident
+
+Discussion
+
+RemoteDiscussion
+    ident   RemoteObjectId
+    discuss DiscussionId
+
+    UniqueRemoteDiscussionIdent ident
+    UniqueRemoteDiscussion      discuss

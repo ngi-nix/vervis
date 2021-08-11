@@ -1,0 +1,91 @@
+$# This file is part of Vervis.
+$#
+$# Written in 2016, 2019 by fr33domlover <fr33domlover@riseup.net>.
+$#
+$# ♡ Copying is an act of love. Please copy, reuse and share.
+$#
+$# The author(s) have dedicated all copyright and related and neighboring
+$# rights to this software to the public domain worldwide. This software is
+$# distributed without any warranty.
+$#
+$# You should have received a copy of the CC0 Public Domain Dedication along
+$# with this software. If not, see
+$# <http://creativecommons.org/publicdomain/zero/1.0/>.
+
+$maybe (Entity _pid person, verified, sharer, unread) <- mperson
+  <div>
+    $if verified
+      <span>
+        [You are logged in as
+        <span .username>#{personLogin person}</span>]
+      $if unread > 0
+        <span>
+          <a href=@{NotificationsR $ sharerIdent sharer}>
+            🔔#{unread}
+      <span>
+        <a href=@{SharerInboxR $ sharerIdent sharer}>
+          [📥 Inbox]
+      <span>
+        <a href=@{SharerOutboxR $ sharerIdent sharer}>
+          [📤 Outbox]
+      <span>
+        <a href=@{SharerFollowersR $ sharerIdent sharer}>
+          [🐤 Followers]
+      <span>
+        <a href=@{SharerFollowingR $ sharerIdent sharer}>
+          [🐔 Following]
+      <span>
+        <a href=@{BrowseR}>
+          [📚 Browse projects]
+      <span>
+        <a href=@{PublishR}>
+          [📣 Publish an activity]
+      <span>
+        <a href=@{AuthR LogoutR}>
+          [🚪 Log out]
+    $else
+      <span>
+        You are logged in as #{personLogin person} (unverified). If you haven't
+        received a verification link by email, you can ask to
+        <a href=@{ResendVerifyEmailR}>resend
+        it. Or <a href=@{AuthR LogoutR}>Log out.
+      $if unread > 0
+        <span>
+          <a href=@{NotificationsR $ sharerIdent sharer}>
+            🔔#{unread}
+$nothing
+  <div>
+    You are not logged in.
+    <a href=@{AuthR LoginR}>Log in.
+    Or
+    <a href=@{AuthR newAccountR}>Sign up.
+
+$if federationDisabled
+  <p>
+    <span>
+      NOTE: Federation is disabled on this instance!
+  $if null federatedServers
+    <span>
+      You can test federation between other instances.
+  $else
+    <span>
+      You can test federation between the following instances:
+    <ul>
+      $forall h <- federatedServers
+        <li>
+          <code>
+            #{h}
+
+<.instance>
+  Vervis @ #{renderAuthority instanceHost}
+
+^{breadcrumbsW}
+
+<div #messages>
+  $forall (_status, msg) <- msgs
+    <div .message>#{msg}
+
+^{widget}
+
+<footer>
+  ^{revisionW}

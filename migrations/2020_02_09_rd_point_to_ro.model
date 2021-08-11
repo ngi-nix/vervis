@@ -1,0 +1,19 @@
+Instance
+    host Host
+
+    UniqueInstance host
+
+RemoteObject
+    instance InstanceId
+    ident    LocalURI
+
+    UniqueRemoteObject instance ident
+
+RemoteDiscussion
+    instance InstanceId
+    ident    LocalURI
+    identNew RemoteObjectId
+    discuss  Int64
+
+    UniqueRemoteDiscussionIdent instance ident
+    UniqueRemoteDiscussion discuss

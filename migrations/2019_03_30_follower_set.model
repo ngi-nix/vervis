@@ -1,0 +1,8 @@
+-- This file is used only for adding the ticketFollowers field, initially
+-- inserting a single temporary FollowerSet, and later creating unique ones,
+-- and finally deleting the temporary one.
+
+FollowerSet
+
+Ticket
+    followers FollowerSetId

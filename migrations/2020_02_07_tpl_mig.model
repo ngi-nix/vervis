@@ -1,0 +1,26 @@
+OutboxItem
+
+Project
+
+Ticket
+    project     ProjectId
+    number      Int           Maybe
+    created     UTCTime
+    title       Text                -- HTML
+    source      Text                -- Pandoc Markdown
+    description Text                -- HTML
+    assignee    Int64         Maybe
+    status      Text
+    closed      UTCTime
+    closer      Int64         Maybe
+    accept      OutboxItemId
+
+    UniqueTicketAccept accept
+
+TicketProjectLocal
+    ticket  TicketId
+    project ProjectId
+    accept  OutboxItemId
+
+    UniqueTicketProjectLocal       ticket
+    UniqueTicketProjectLocalAccept accept

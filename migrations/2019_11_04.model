@@ -1,0 +1,5 @@
+RemoteObject
+    instance InstanceId
+    ident    LocalURI
+
+    UniqueRemoteObject instance ident

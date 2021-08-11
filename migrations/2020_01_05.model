@@ -1,0 +1,5 @@
+TicketParamClass
+    ticket TicketId
+    field  WorkflowFieldId
+
+    UniqueTicketParamClass ticket field

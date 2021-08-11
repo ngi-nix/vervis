@@ -1,0 +1,13 @@
+RemoteActivity
+    instance InstanceId
+    ident    Text
+    content  PersistJSONObject
+    received UTCTime
+
+    UniqueRemoteActivity instance ident
+
+InboxItemRemote
+    person   PersonId
+    activity RemoteActivityId
+
+    UniqueInboxItemRemote person activity

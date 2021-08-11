@@ -1,0 +1,6 @@
+OutboxItem
+    person    PersonId
+    activity  PersistJSONObject
+    published UTCTime
+
+FollowerSet

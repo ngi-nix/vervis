@@ -1,0 +1,26 @@
+VerifKey
+    ident    Text
+    instance InstanceId
+    expires  UTCTime Maybe
+    public   ByteString
+    sharer   RemoteSharerId Maybe
+
+    UniqueVerifKey instance ident
+
+VerifKeySharedUsage
+    key  VerifKeyId
+    user RemoteSharerId
+
+    UniqueVerifKeySharedUsage key user
+
+RemoteSharer
+    ident    Text
+    instance InstanceId
+    inbox    Text
+
+    UniqueRemoteSharer instance ident
+
+Instance
+    host Text
+
+    UniqueInstance host

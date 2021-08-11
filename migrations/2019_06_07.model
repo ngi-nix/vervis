@@ -1,0 +1,36 @@
+Person
+    ident               Int64
+    login               Text
+    passphraseHash      ByteString
+    email               Text
+    verified            Bool
+    verifiedKey         Text
+    verifiedKeyCreated  UTCTime
+    resetPassKey        Text
+    resetPassKeyCreated UTCTime
+    about               Text
+    inbox               InboxId
+
+    UniquePersonIdent ident
+    UniquePersonLogin login
+    UniquePersonEmail email
+
+Inbox
+
+InboxItemLocal
+    person   PersonId
+    inbox    InboxId
+    activity Int64
+    item     Int64
+
+    UniqueInboxItemLocal person activity
+    UniqueInboxItemLocalItem item
+
+InboxItemRemote
+    person   PersonId
+    inbox    InboxId
+    activity Int64
+    item     Int64
+
+    UniqueInboxItemRemote person activity
+    UniqueInboxItemRemoteItem item

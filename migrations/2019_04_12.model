@@ -1,0 +1,20 @@
+UnfetchedRemoteActor
+    instance InstanceId
+    ident    Text
+    since    UTCTime Maybe
+
+    UniqueUnfetchedRemoteActor instance ident
+
+UnlinkedDelivery
+    recipient UnfetchedRemoteActorId
+    activity  OutboxItemId
+    running   Bool
+
+    UniqueUnlinkedDelivery recipient activity
+
+Delivery
+    recipient RemoteActorId
+    activity  OutboxItemId
+    running   Bool
+
+    UniqueDelivery recipient activity

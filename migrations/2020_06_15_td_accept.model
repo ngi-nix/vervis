@@ -1,0 +1,85 @@
+Outbox
+
+OutboxItem
+    outbox    OutboxId
+    activity  PersistJSONObject
+    published UTCTime
+
+Ticket
+
+Discussion
+
+FollowerSet
+
+Inbox
+
+Role
+
+Workflow
+
+Sharer
+
+Repo
+
+Person
+
+Project
+    ident      PrjIdent
+    sharer     SharerId
+    name       Text          Maybe
+    desc       Text          Maybe
+    workflow   WorkflowId
+    nextTicket Int
+    wiki       RepoId        Maybe
+    collabUser RoleId        Maybe
+    collabAnon RoleId        Maybe
+    inbox      InboxId
+    outbox     OutboxId
+    followers  FollowerSetId
+
+    UniqueProject ident sharer
+    UniqueProjectInbox inbox
+    UniqueProjectOutbox outbox
+    UniqueProjectFollowers followers
+
+LocalTicket
+    ticket    TicketId
+    discuss   DiscussionId
+    followers FollowerSetId
+
+    UniqueLocalTicket           ticket
+    UniqueLocalTicketDiscussion discuss
+    UniqueLocalTicketFollowers  followers
+
+TicketContextLocal
+    ticket  TicketId
+    accept  OutboxItemId
+
+    UniqueTicketContextLocal       ticket
+    UniqueTicketContextLocalAccept accept
+
+TicketProjectLocal
+    context TicketContextLocalId
+    project ProjectId
+
+    UniqueTicketProjectLocal context
+
+TicketAuthorLocal
+    ticket LocalTicketId
+    author PersonId
+    open   OutboxItemId
+
+    UniqueTicketAuthorLocal     ticket
+    UniqueTicketAuthorLocalOpen open
+
+TicketUnderProject
+    project TicketContextLocalId
+    author  TicketAuthorLocalId
+
+    UniqueTicketUnderProjectProject project
+    UniqueTicketUnderProjectAuthor  author
+
+LocalTicketDependency
+    parent  LocalTicketId
+    created UTCTime
+    accept  OutboxItemId

@@ -1,0 +1,5 @@
+TicketDependencyOffer
+    offer InboxItemId
+    child LocalTicketId
+
+    UniqueTicketDependencyOffer offer

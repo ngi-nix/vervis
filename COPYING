@@ -1,0 +1,11 @@
+Vervis is released under the GNU Affero General Public License, version 3
+(AGPL3). See the `COPYING.AGPL3` for the license text.
+
+Many of the source files have other licenses though:
+
+- Most of the source code is in the public domain using CC0, see the
+  `COPYING.CC0` file
+- A few files contain pieces of code copied or adapted from existing code under
+  the MIT license, so those files are under MIT license too
+- Vervis uses the `pandoc` and `highlighting-kate` Haskell libraries which are
+  released under the GPL

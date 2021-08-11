@@ -1,0 +1,5 @@
+TicketUnderProject
+    project TicketProjectLocalId
+    author  TicketAuthorLocalId
+
+    UniqueTicketUnderProject project author

@@ -1,0 +1,20 @@
+Instance
+    host Host
+
+    UniqueInstance host
+
+RemoteObject
+    instance InstanceId
+    ident    LocalURI
+
+    UniqueRemoteObject instance ident
+
+RemoteActivity
+    instance InstanceId
+    ident    LocalURI
+    identNew RemoteObjectId
+    content  PersistJSONObject
+    received UTCTime
+
+    UniqueRemoteActivity instance ident
+    UniqueRemoteActivityNew identNew

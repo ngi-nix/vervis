@@ -1,0 +1,196 @@
+-- This file is part of Vervis.
+--
+-- Written in 2016 by fr33domlover <fr33domlover@riseup.net>.
+--
+-- ♡ Copying is an act of love. Please copy, reuse and share.
+--
+-- The author(s) have dedicated all copyright and related and neighboring
+-- rights to this software to the public domain worldwide. This software is
+-- distributed without any warranty.
+--
+-- You should have received a copy of the CC0 Public Domain Dedication along
+-- with this software. If not, see
+-- <http://creativecommons.org/publicdomain/zero/1.0/>.
+
+-------------------------------------------------------------------------------
+-- People
+-------------------------------------------------------------------------------
+
+Sharer
+    ident   ShrIdent
+    name    Text     Maybe
+    created UTCTime
+
+    UniqueSharer ident
+
+Person
+    ident SharerId
+    login Text
+    hash  Text     Maybe
+    email Text     Maybe
+
+    UniquePersonIdent ident
+    UniquePersonLogin login
+
+SshKey
+    ident   KyIdent
+    person  PersonId
+    algo    ByteString
+    content ByteString
+
+    UniqueSshKey person ident
+
+Group
+    ident SharerId
+
+    UniqueGroup ident
+
+GroupMember
+    person PersonId
+    group  GroupId
+    role   GroupRole
+    joined UTCTime
+
+    UniqueGroupMember person group
+
+RepoRole
+    ident  RlIdent
+    sharer SharerId
+    desc   Text
+
+    UniqueRepoRole sharer ident
+
+RepoRoleInherit
+    parent RepoRoleId
+    child  RepoRoleId
+
+    UniqueRepoRoleInherit parent child
+
+RepoAccess
+    role RepoRoleId
+    op   RepoOperation
+
+    UniqueRepoAccess role op
+
+RepoCollab
+    repo   RepoId
+    person PersonId
+    role   RepoRoleId
+
+    UniqueRepoCollab repo person
+
+RepoCollabAnon
+    repo RepoId
+    role RepoRoleId
+
+    UniqueRepoCollabAnon repo
+
+RepoCollabUser
+    repo RepoId
+    role RepoRoleId
+
+    UniqueRepoCollabUser repo
+
+ProjectRole
+    ident  RlIdent
+    sharer SharerId
+    desc   Text
+
+    UniqueProjectRole sharer ident
+
+ProjectRoleInherit
+    parent ProjectRoleId
+    child  ProjectRoleId
+
+    UniqueProjectRoleInherit parent child
+
+ProjectAccess
+    role ProjectRoleId
+    op   ProjectOperation
+
+    UniqueProjectAccess role op
+
+ProjectCollab
+    project ProjectId
+    person  PersonId
+    role    ProjectRoleId
+
+    UniqueProjectCollab project person
+
+ProjectCollabAnon
+    repo ProjectId
+    role ProjectRoleId
+
+    UniqueProjectCollabAnon repo
+
+ProjectCollabUser
+    repo ProjectId
+    role ProjectRoleId
+
+    UniqueProjectCollabUser repo
+
+-------------------------------------------------------------------------------
+-- Projects
+-------------------------------------------------------------------------------
+
+Project
+    ident      PrjIdent
+    sharer     SharerId
+    name       Text     Maybe
+    desc       Text     Maybe
+    nextTicket Int
+    wiki       RepoId   Maybe
+
+    UniqueProject ident sharer
+
+Repo
+    ident      RpIdent
+    sharer     SharerId
+    vcs        VersionControlSystem
+    project    ProjectId            Maybe
+    desc       Text                 Maybe
+    mainBranch Text
+
+    UniqueRepo ident sharer
+
+Ticket
+    project  ProjectId
+    number   Int
+    created  UTCTime
+    creator  PersonId
+    title    Text
+    desc     Text -- Assume this is Pandoc Markdown
+    assignee PersonId     Maybe
+    done     Bool
+    closed   UTCTime
+    closer   PersonId
+    discuss  DiscussionId
+
+    UniqueTicket project number
+
+TicketDependency
+    parent TicketId
+    child  TicketId
+
+    UniqueTicketDependency parent child
+
+TicketClaimRequest
+    person  PersonId
+    ticket  TicketId
+    message Text     -- Assume this is Pandoc Markdown
+    created UTCTime
+
+    UniqueTicketClaimRequest person ticket
+
+Discussion
+    nextMessage Int
+
+Message
+    author  PersonId
+    created UTCTime
+    content Text               -- Assume this is Pandoc Markdown
+    parent  MessageId    Maybe
+    root    DiscussionId
+    number  Int
+
+    UniqueMessage root number

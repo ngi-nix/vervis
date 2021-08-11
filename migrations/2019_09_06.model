@@ -1,0 +1,10 @@
+Inbox
+
+FollowerSet
+
+Repo
+    inbox     InboxId
+    followers FollowerSetId
+
+Person
+    followers FollowerSetId

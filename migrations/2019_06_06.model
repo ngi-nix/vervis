@@ -1,0 +1,11 @@
+TicketAuthorLocal
+    ticket TicketId
+    author PersonId
+
+    UniqueTicketAuthorLocal ticket
+
+TicketAuthorRemote
+    ticket TicketId
+    author RemoteActorId
+
+    UniqueTicketAuthorRemote ticket

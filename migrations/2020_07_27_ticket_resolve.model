@@ -1,0 +1,21 @@
+TicketResolve
+    ticket LocalTicketId
+    accept OutboxItemId
+
+    UniqueTicketResolve ticket
+    UniqueTicketResolveAccept accept
+
+TicketResolveLocal
+    ticket   TicketResolveId
+    activity OutboxItemId
+
+    UniqueTicketResolveLocal ticket
+    UniqueTicketResolveLocalActivity activity
+
+TicketResolveRemote
+    ticket   TicketResolveId
+    activity RemoteActivityId
+    actor    RemoteActorId
+
+    UniqueTicketResolveRemote ticket
+    UniqueTicketResolveRemoteActivity activity

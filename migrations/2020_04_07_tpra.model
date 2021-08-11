@@ -1,0 +1,8 @@
+TicketProjectRemoteAccept
+    ticket   TicketProjectRemoteId
+    activity RemoteActivityId
+    accept   Bool
+    result   LocalURI Maybe
+
+    UniqueTicketProjectRemoteAccept         ticket
+    UniqueTicketProjectRemoteAcceptActivity activity

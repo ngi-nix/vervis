@@ -1,0 +1,21 @@
+FollowRemoteRequest
+    person   PersonId
+    target   FedURI
+    recip    FedURI Maybe
+    public   Bool
+    activity OutboxItemId
+
+    UniqueFollowRemoteRequest person target
+    UniqueFollowRemoteRequestActivity activity
+
+FollowRemote
+    person PersonId
+    recip  RemoteActorId -- actor managing the followed object
+    target FedURI        -- the followed object
+    public Bool
+    follow OutboxItemId
+    accept RemoteActivityId
+
+    UniqueFollowRemote person target
+    UniqueFollowRemoteFollow follow
+    UniqueFollowRemoteAccept accept

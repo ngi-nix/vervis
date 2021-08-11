@@ -1,0 +1,6 @@
+TicketProjectRemote
+    ticket  TicketAuthorLocalId
+    tracker RemoteActorId
+    project RemoteObjectId Maybe
+
+    UniqueTicketProjectRemote ticket

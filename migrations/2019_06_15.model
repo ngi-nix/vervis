@@ -1,0 +1,26 @@
+Person
+    ident               Int64
+    login               Text
+    passphraseHash      ByteString
+    email               Text
+    verified            Bool
+    verifiedKey         Text
+    verifiedKeyCreated  UTCTime
+    resetPassKey        Text
+    resetPassKeyCreated UTCTime
+    about               Text
+    inbox               Int64
+    outbox              OutboxId
+
+    UniquePersonIdent ident
+    UniquePersonLogin login
+    UniquePersonEmail email
+    UniquePersonInbox inbox
+
+Outbox
+
+OutboxItem
+    person    PersonId
+    outbox    OutboxId
+    activity  PersistJSONObject
+    published UTCTime

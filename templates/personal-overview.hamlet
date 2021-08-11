@@ -1,0 +1,52 @@
+$# This file is part of Vervis.
+$#
+$# Written in 2016, 2018, 2019 by fr33domlover <fr33domlover@riseup.net>.
+$#
+$# ♡ Copying is an act of love. Please copy, reuse and share.
+$#
+$# The author(s) have dedicated all copyright and related and neighboring
+$# rights to this software to the public domain worldwide. This software is
+$# distributed without any warranty.
+$#
+$# You should have received a copy of the CC0 Public Domain Dedication along
+$# with this software. If not, see
+$# <http://creativecommons.org/publicdomain/zero/1.0/>.
+
+<p>
+  This is the homepage for logged-in users. You should eventually see a
+  personal overview here. Your projects, repos, news, notifications, settings
+  and so on.
+
+<ul>
+  <li>
+    <a href=@{PublishR}>
+      Publish an activity
+  <li>
+    <p>Projects:
+    <ul>
+      $forall project <- projects
+        <li>
+          <a href=@{ProjectR ident project}>#{prj2text project}
+      <li>
+        <a href=@{ProjectNewR ident}>Create new…
+
+  <li>
+    <p>Standalone repos:
+    <ul>
+      $forall repo <- repos
+        <li>
+          <a href=@{RepoR ident repo}>#{rp2text repo}
+      <li>
+        <a href=@{RepoNewR ident}>Create new…
+
+  <li>
+    <a href=@{SharerInboxR ident}>Inbox
+
+  <li>
+    <a href=@{KeysR}>SSH keys
+
+  <li>
+    <a href=@{ProjectRolesR ident}>Roles
+
+  <li>
+    <a href=@{ClaimRequestsPersonR}>Ticket claim requests

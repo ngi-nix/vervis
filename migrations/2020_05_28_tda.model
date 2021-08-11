@@ -1,0 +1,15 @@
+TicketDependencyAuthorLocal
+    dep    TicketDependencyId
+    author PersonId
+    open   OutboxItemId
+
+    UniqueTicketDependencyAuthorLocal     dep
+    UniqueTicketDependencyAuthorLocalOpen open
+
+TicketDependencyAuthorRemote
+    dep    TicketDependencyId
+    author RemoteActorId
+    open   RemoteActivityId
+
+    UniqueTicketDependencyAuthorRemote     dep
+    UniqueTicketDependencyAuthorRemoteOpen open

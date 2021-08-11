@@ -1,0 +1,32 @@
+Ticket
+
+LocalTicket
+    ticket    TicketId
+    discuss   Int64
+    followers Int64
+
+    UniqueLocalTicket           ticket
+    UniqueLocalTicketDiscussion discuss
+    UniqueLocalTicketFollowers  followers
+
+TicketProjectLocal
+    ticket  TicketId
+    project Int64
+    accept  Int64
+
+    UniqueTicketProjectLocal       ticket
+    UniqueTicketProjectLocalAccept accept
+
+TicketAuthorLocal
+    ticket LocalTicketId
+    author Int64
+    open   Int64
+
+    UniqueTicketAuthorLocal     ticket
+    UniqueTicketAuthorLocalOpen open
+
+TicketUnderProject
+    project TicketProjectLocalId
+    author  TicketAuthorLocalId
+
+    UniqueTicketUnderProject project author

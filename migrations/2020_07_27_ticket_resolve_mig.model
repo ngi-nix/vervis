@@ -1,0 +1,123 @@
+TicketResolve
+    ticket LocalTicketId
+    accept OutboxItemId
+
+    UniqueTicketResolve ticket
+    UniqueTicketResolveAccept accept
+
+TicketResolveLocal
+    ticket   TicketResolveId
+    activity OutboxItemId
+
+    UniqueTicketResolveLocal ticket
+    UniqueTicketResolveLocalActivity activity
+
+Ticket
+    number      Int           Maybe
+    created     UTCTime
+    title       Text                -- HTML
+    source      Text                -- Pandoc Markdown
+    description Text                -- HTML
+    assignee    PersonId      Maybe
+    status      Text
+    closed      UTCTime
+    closer      PersonId      Maybe
+
+LocalTicket
+    ticket    TicketId
+    discuss   DiscussionId
+    followers FollowerSetId
+
+    UniqueLocalTicket           ticket
+    UniqueLocalTicketDiscussion discuss
+    UniqueLocalTicketFollowers  followers
+
+Discussion
+
+FollowerSet
+
+Sharer
+
+Inbox
+
+Person
+    ident               SharerId
+    login               Text
+    passphraseHash      ByteString
+    email               Text
+    verified            Bool
+    verifiedKey         Text
+    verifiedKeyCreated  UTCTime
+    resetPassKey        Text
+    resetPassKeyCreated UTCTime
+    about               Text
+    inbox               InboxId
+    outbox              OutboxId
+    followers           FollowerSetId
+
+    UniquePersonIdent ident
+    UniquePersonLogin login
+    UniquePersonEmail email
+    UniquePersonInbox inbox
+    UniquePersonOutbox outbox
+    UniquePersonFollowers followers
+
+Outbox
+
+OutboxItem
+    outbox    OutboxId
+    activity  PersistJSONObject
+    published UTCTime
+
+TicketContextLocal
+    ticket  TicketId
+    accept  OutboxItemId
+
+    UniqueTicketContextLocal       ticket
+    UniqueTicketContextLocalAccept accept
+
+TicketProjectLocal
+    context TicketContextLocalId
+    project ProjectId
+
+    UniqueTicketProjectLocal context
+
+TicketUnderProject
+    project TicketContextLocalId
+    author  TicketAuthorLocalId
+
+    UniqueTicketUnderProjectProject project
+    UniqueTicketUnderProjectAuthor  author
+
+TicketAuthorLocal
+    ticket LocalTicketId
+    author PersonId
+    open   OutboxItemId
+
+    UniqueTicketAuthorLocal     ticket
+    UniqueTicketAuthorLocalOpen open
+
+Project
+    ident      PrjIdent
+    sharer     SharerId
+    name       Text          Maybe
+    desc       Text          Maybe
+    workflow   WorkflowId
+    nextTicket Int
+    wiki       RepoId        Maybe
+    collabUser RoleId        Maybe
+    collabAnon RoleId        Maybe
+    inbox      InboxId
+    outbox     OutboxId
+    followers  FollowerSetId
+
+    UniqueProject ident sharer
+    UniqueProjectInbox inbox
+    UniqueProjectOutbox outbox
+    UniqueProjectFollowers followers
+
+Workflow
+
+Repo
+
+Role

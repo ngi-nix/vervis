@@ -1,0 +1,217 @@
+-- This file is part of Vervis.
+--
+-- Written in 2016, 2018, 2019, 2020 by fr33domlover <fr33domlover@riseup.net>.
+--
+-- ♡ Copying is an act of love. Please copy, reuse and share.
+--
+-- The author(s) have dedicated all copyright and related and neighboring
+-- rights to this software to the public domain worldwide. This software is
+-- distributed without any warranty.
+--
+-- You should have received a copy of the CC0 Public Domain Dedication along
+-- with this software. If not, see
+-- <http://creativecommons.org/publicdomain/zero/1.0/>.
+
+-- ----------------------------------------------------------------------------
+-- Yesod misc
+-- ----------------------------------------------------------------------------
+
+/static                                      StaticR           Static appStatic
+/favicon.ico                                 FaviconR          GET
+/robots.txt                                  RobotsR           GET
+
+/highlight/#Text/style.css                   HighlightStyleR   GET
+
+-- ----------------------------------------------------------------------------
+-- Internal
+-- ----------------------------------------------------------------------------
+
+/post-receive                                PostReceiveR      POST
+
+-- ----------------------------------------------------------------------------
+-- Federation
+-- ----------------------------------------------------------------------------
+
+/publish                                     PublishR          GET POST
+/inbox                                       InboxDebugR       GET
+/akey1                                       ActorKey1R        GET
+/akey2                                       ActorKey2R        GET
+
+-- ----------------------------------------------------------------------------
+-- Current user
+-- ----------------------------------------------------------------------------
+
+/                                            HomeR                GET
+
+/auth/!resend                                ResendVerifyEmailR   GET
+/auth                                        AuthR                Auth getAuth
+/oauth                                       DvaraR               Dvara getDvara
+
+/k                                           KeysR                GET POST
+/k/!new                                      KeyNewR              GET
+/k/#KyIdent                                  KeyR                 GET DELETE POST
+
+/cr                                          ClaimRequestsPersonR GET
+
+-- ----------------------------------------------------------------------------
+-- People
+-- ----------------------------------------------------------------------------
+
+/s                                           SharersR             GET
+/s/#ShrIdent                                 SharerR              GET
+/s/#ShrIdent/inbox                           SharerInboxR         GET POST
+/s/#ShrIdent/notifications                   NotificationsR       GET POST
+/s/#ShrIdent/outbox                          SharerOutboxR        GET POST
+/s/#ShrIdent/outbox/#OutboxItemKeyHashid     SharerOutboxItemR    GET
+/s/#ShrIdent/followers                       SharerFollowersR     GET
+/s/#ShrIdent/following                       SharerFollowingR     GET
+/s/#ShrIdent/follow                          SharerFollowR        POST
+/s/#ShrIdent/unfollow                        SharerUnfollowR      POST
+
+/s/#ShrIdent/k/#SshKeyKeyHashid              SshKeyR              GET
+
+/p                                           PeopleR              GET
+
+/g                                           GroupsR              GET POST
+/g/!new                                      GroupNewR            GET
+/g/#ShrIdent/m                               GroupMembersR        GET POST
+/g/#ShrIdent/m/!new                          GroupMemberNewR      GET
+/g/#ShrIdent/m/#ShrIdent                     GroupMemberR         GET DELETE POST
+
+/s/#ShrIdent/pr                              ProjectRolesR        GET POST
+/s/#ShrIdent/pr/!new                         ProjectRoleNewR      GET
+/s/#ShrIdent/pr/#RlIdent                     ProjectRoleR         GET DELETE POST
+/s/#ShrIdent/pr/#RlIdent/a                   ProjectRoleOpsR      GET POST
+/s/#ShrIdent/pr/#RlIdent/a/!new              ProjectRoleOpNewR    GET
+
+-- ----------------------------------------------------------------------------
+-- Projects
+-- ----------------------------------------------------------------------------
+
+/browse                                      BrowseR               GET
+
+/s/#ShrIdent/r                               ReposR                GET POST
+/s/#ShrIdent/r/!new                          RepoNewR              GET
+/s/#ShrIdent/r/#RpIdent                      RepoR                 GET PUT DELETE POST
+/s/#ShrIdent/r/#RpIdent/inbox                RepoInboxR            GET POST
+/s/#ShrIdent/r/#RpIdent/outbox                      RepoOutboxR     GET
+/s/#ShrIdent/r/#RpIdent/outbox/#OutboxItemKeyHashid RepoOutboxItemR GET
+/s/#ShrIdent/r/#RpIdent/team                 RepoTeamR             GET
+/s/#ShrIdent/r/#RpIdent/followers            RepoFollowersR        GET
+/s/#ShrIdent/r/#RpIdent/edit                 RepoEditR             GET
+/s/#ShrIdent/r/#RpIdent/follow               RepoFollowR           POST
+/s/#ShrIdent/r/#RpIdent/unfollow             RepoUnfollowR         POST
+/s/#ShrIdent/r/#RpIdent/s/+Texts             RepoSourceR           GET
+/s/#ShrIdent/r/#RpIdent/c                    RepoHeadChangesR      GET
+/s/#ShrIdent/r/#RpIdent/b/#Text              RepoBranchR           GET
+/s/#ShrIdent/r/#RpIdent/c/#Text              RepoChangesR          GET
+/s/#ShrIdent/r/#RpIdent/p/#Text              RepoCommitR           GET
+/s/#ShrIdent/r/#RpIdent/d                    RepoDevsR             GET POST
+/s/#ShrIdent/r/#RpIdent/d/!new               RepoDevNewR           GET
+/s/#ShrIdent/r/#RpIdent/d/#ShrIdent          RepoDevR              GET DELETE POST
+
+/s/#ShrIdent/r/#RpIdent/pt                                 RepoPatchesR          GET
+
+/s/#ShrIdent/r/#RpIdent/pt/#LocalTicketKeyHashid           RepoPatchR            GET
+/s/#ShrIdent/r/#RpIdent/pt/#LocalTicketKeyHashid/d         RepoPatchDiscussionR  GET
+/s/#ShrIdent/r/#RpIdent/pt/#LocalTicketKeyHashid/deps      RepoPatchDepsR        GET
+/s/#ShrIdent/r/#RpIdent/pt/#LocalTicketKeyHashid/rdeps     RepoPatchReverseDepsR GET
+/s/#ShrIdent/r/#RpIdent/pt/#LocalTicketKeyHashid/followers RepoPatchFollowersR   GET
+/s/#ShrIdent/r/#RpIdent/pt/#LocalTicketKeyHashid/events    RepoPatchEventsR      GET
+
+/s/#ShrIdent/r/#RpIdent/pt/#LocalTicketKeyHashid/v/#PatchKeyHashid RepoPatchVersionR GET
+
+/s/#ShrIdent/r/#RpIdent/_darcs/+Texts        DarcsDownloadR        GET
+
+/s/#ShrIdent/r/#RpIdent/info/refs            GitRefDiscoverR       GET
+/s/#ShrIdent/r/#RpIdent/git-upload-pack      GitUploadRequestR     POST
+
+/s/#ShrIdent/p                               ProjectsR             GET POST
+/s/#ShrIdent/p/!new                          ProjectNewR           GET
+/s/#ShrIdent/p/#PrjIdent                     ProjectR              GET PUT POST
+/s/#ShrIdent/p/#PrjIdent/inbox               ProjectInboxR         GET POST
+/s/#ShrIdent/p/#PrjIdent/outbox                      ProjectOutboxR     GET
+/s/#ShrIdent/p/#PrjIdent/outbox/#OutboxItemKeyHashid ProjectOutboxItemR GET
+/s/#ShrIdent/p/#PrjIdent/team                ProjectTeamR          GET
+/s/#ShrIdent/p/#PrjIdent/followers           ProjectFollowersR     GET
+/s/#ShrIdent/p/#PrjIdent/edit                ProjectEditR          GET
+/s/#ShrIdent/p/#PrjIdent/follow              ProjectFollowR        POST
+/s/#ShrIdent/p/#PrjIdent/unfollow            ProjectUnfollowR      POST
+/s/#ShrIdent/p/#PrjIdent/d                   ProjectDevsR          GET POST
+/s/#ShrIdent/p/#PrjIdent/d/!new              ProjectDevNewR        GET
+/s/#ShrIdent/p/#PrjIdent/d/#ShrIdent         ProjectDevR           GET DELETE POST
+
+/s/#ShrIdent/p/#PrjIdent/tcr                 ClaimRequestsProjectR GET
+
+-- /w                                           GlobalWorkflowsR      GET POST
+-- /w/!new                                      GlobalWorkflowNewR    GET
+-- /w/#WflIdent                                 GlobalWorkflowR       GET DELETE POST
+
+/s/#ShrIdent/w                               WorkflowsR            GET POST
+/s/#ShrIdent/w/!new                          WorkflowNewR          GET
+/s/#ShrIdent/w/#WflIdent                     WorkflowR             GET DELETE POST
+/s/#ShrIdent/w/#WflIdent/f                   WorkflowFieldsR       GET POST
+/s/#ShrIdent/w/#WflIdent/f/!new              WorkflowFieldNewR     GET
+/s/#ShrIdent/w/#WflIdent/f/#FldIdent         WorkflowFieldR        GET DELETE POST
+/s/#ShrIdent/w/#WflIdent/e                   WorkflowEnumsR        GET POST
+/s/#ShrIdent/w/#WflIdent/e/!new              WorkflowEnumNewR      GET
+/s/#ShrIdent/w/#WflIdent/e/#EnmIdent         WorkflowEnumR         GET DELETE POST
+/s/#ShrIdent/w/#WflIdent/e/#EnmIdent/c       WorkflowEnumCtorsR    GET POST
+/s/#ShrIdent/w/#WflIdent/e/#EnmIdent/c/!new  WorkflowEnumCtorNewR  GET
+/s/#ShrIdent/w/#WflIdent/e/#EnmIdent/c/#Text WorkflowEnumCtorR     PUT DELETE POST
+
+/s/#ShrIdent/m/#LocalMessageKeyHashid        MessageR              GET
+
+/tdeps/#TicketDepKeyHashid                   TicketDepR            GET
+
+/s/#ShrIdent/p/#PrjIdent/t                   ProjectTicketsR              GET POST
+/s/#ShrIdent/p/#PrjIdent/t/!tree             ProjectTicketTreeR           GET
+/s/#ShrIdent/p/#PrjIdent/t/!new              ProjectTicketNewR            GET
+
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid              ProjectTicketR               GET PUT DELETE POST
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/edit         ProjectTicketEditR           GET
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/accept       ProjectTicketAcceptR         POST
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/close        ProjectTicketCloseR          POST
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/open         ProjectTicketOpenR           POST
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/claim        ProjectTicketClaimR          POST
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/unclaim      ProjectTicketUnclaimR        POST
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/assign       ProjectTicketAssignR         GET POST
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/unassign     ProjectTicketUnassignR       POST
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/follow       ProjectTicketFollowR         POST
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/unfollow     ProjectTicketUnfollowR       POST
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/cr           ClaimRequestsTicketR  GET POST
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/cr/new       ClaimRequestNewR      GET
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/d            ProjectTicketDiscussionR     GET POST
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/d/!reply     ProjectTicketTopReplyR       GET
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/d/#MessageKeyHashid ProjectTicketMessageR        POST
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/d/#MessageKeyHashid/reply ProjectTicketReplyR          GET
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/deps         ProjectTicketDepsR           GET POST
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/deps/!new    ProjectTicketDepNewR         GET
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/deps/#LocalTicketKeyHashid TicketDepOldR            POST DELETE
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/rdeps        ProjectTicketReverseDepsR    GET
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/participants ProjectTicketParticipantsR   GET
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/team         ProjectTicketTeamR           GET
+/s/#ShrIdent/p/#PrjIdent/t/#LocalTicketKeyHashid/events       ProjectTicketEventsR         GET
+
+/s/#ShrIdent/t                               SharerTicketsR        GET
+
+/s/#ShrIdent/t/#TicketAuthorLocalKeyHashid   SharerTicketR         GET
+/s/#ShrIdent/t/#TicketAuthorLocalKeyHashid/d         SharerTicketDiscussionR     GET
+/s/#ShrIdent/t/#TicketAuthorLocalKeyHashid/deps      SharerTicketDepsR           GET
+/s/#ShrIdent/t/#TicketAuthorLocalKeyHashid/rdeps     SharerTicketReverseDepsR    GET
+/s/#ShrIdent/t/#TicketAuthorLocalKeyHashid/followers SharerTicketFollowersR      GET
+/s/#ShrIdent/t/#TicketAuthorLocalKeyHashid/team      SharerTicketTeamR           GET
+/s/#ShrIdent/t/#TicketAuthorLocalKeyHashid/events    SharerTicketEventsR         GET
+
+/s/#ShrIdent/pt                                       SharerPatchesR          GET
+
+/s/#ShrIdent/pt/#TicketAuthorLocalKeyHashid           SharerPatchR            GET
+/s/#ShrIdent/pt/#TicketAuthorLocalKeyHashid/d         SharerPatchDiscussionR  GET
+/s/#ShrIdent/pt/#TicketAuthorLocalKeyHashid/deps      SharerPatchDepsR        GET
+/s/#ShrIdent/pt/#TicketAuthorLocalKeyHashid/rdeps     SharerPatchReverseDepsR GET
+/s/#ShrIdent/pt/#TicketAuthorLocalKeyHashid/followers SharerPatchFollowersR   GET
+/s/#ShrIdent/pt/#TicketAuthorLocalKeyHashid/events    SharerPatchEventsR      GET
+
+/s/#ShrIdent/pt/#TicketAuthorLocalKeyHashid/v/#PatchKeyHashid SharerPatchVersionR GET
+
+/s/#ShrIdent/p/#PrjIdent/w/+Texts            WikiPageR             GET

@@ -1,0 +1,39 @@
+Person
+    ident               Int64
+    login               Text
+    passphraseHash      ByteString
+    email               Text
+    verified            Bool
+    verifiedKey         Text
+    verifiedKeyCreated  UTCTime
+    resetPassKey        Text
+    resetPassKeyCreated UTCTime
+    about               Text
+    inbox               Int64
+    outbox              OutboxId
+    followers           Int64
+
+Outbox
+
+OutboxItem
+    outbox    OutboxId
+    activity  PersistJSONObject
+    published UTCTime
+
+Ticket
+
+TicketDependency
+    parent  TicketId
+    child   TicketId
+    author  PersonId
+    created UTCTime
+
+    UniqueTicketDependency parent child
+
+TicketDependencyAuthorLocal
+    dep    TicketDependencyId
+    author PersonId
+    open   OutboxItemId
+
+    UniqueTicketDependencyAuthorLocal     dep
+    UniqueTicketDependencyAuthorLocalOpen open

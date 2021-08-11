@@ -1,0 +1,6 @@
+RemoteTicket
+    ticket  TicketAuthorRemoteId
+    ident   RemoteObjectId
+
+    UniqueRemoteTicket      ticket
+    UniqueRemoteTicketIdent ident

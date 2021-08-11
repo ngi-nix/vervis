@@ -1,0 +1,472 @@
+name:                vervis
+version:             0.1
+synopsis:            Federated project hosting platform
+description:
+  Vervis a decentralized software project hosting web application, which
+  federates using ActivityPub and ForgeFed.
+  .
+  Most of the source code is in the public domain using the CC0 public domain
+  dedication, but the application as a whole has GPL dependencies, and is
+  released under the AGPL 3 license.
+homepage:            https://dev.angeley.es/s/fr33domlover/p/vervis
+bug-reports:         https://dev.angeley.es/s/fr33domlover/p/vervis/t
+license:             OtherLicense
+license-file:        COPYING
+author:              fr33domlover
+maintainer:          fr33domlover@riseup.net
+copyright:           ♡ Copying is an act of love. Please copy, reuse and share.
+category:            Development, Distribution, Git, Web
+build-type:          Simple
+extra-source-files:  AUTHORS
+                     CHANGELOG.md
+                     COPYING
+                     FEDERATION.md
+                     INSTALL.md
+                     README.md
+cabal-version:       >=1.10
+
+source-repository head
+  type:                darcs
+  location:            https://dev.angeley.es/s/fr33domlover/r/vervis
+
+flag dev
+  description: Turn on development settings, like auto-reload templates.
+  default:     False
+
+flag library-only
+  description: Build for use with "yesod devel"
+  default:     False
+
+library
+  exposed-modules:     Control.Applicative.Local
+                       Control.Concurrent.Local
+                       Control.Concurrent.ResultShare
+                       Control.Monad.Trans.Except.Local
+                       Crypto.PubKey.Encoding
+                       Crypto.PublicVerifKey
+                       Darcs.Local.Repository
+                       Data.Aeson.Encode.Pretty.ToEncoding
+                       Data.Aeson.Local
+                       Data.Attoparsec.ByteString.Local
+                       Data.Binary.Local
+                       Data.ByteString.Char8.Local
+                       Data.ByteString.Local
+                       Data.CaseInsensitive.Local
+                       Data.Char.Local
+                       Data.DList.Local
+                       Data.Either.Local
+                       Data.EventTime.Local
+                       Data.Functor.Local
+                       Data.Git.Local
+                       Data.Graph.DirectedAcyclic.View.Tree
+                       Data.Graph.Inductive.Query.Cycle
+                       Data.Graph.Inductive.Query.Layer
+                       Data.Graph.Inductive.Query.Path
+                       Data.Graph.Inductive.Query.TransRed
+                       Data.HashMap.Lazy.Local
+                       Data.Hourglass.Local
+                       Data.Int.Local
+                       Data.KeyFile
+                       Data.List.Local
+                       Data.List.NonEmpty.Local
+                       Data.Maybe.Local
+                       Data.MediaType
+                       Data.Paginate.Local
+                       Data.Patch.Local
+                       Data.Text.UTF8.Local
+                       Data.Text.Lazy.UTF8.Local
+                       Data.Time.Clock.Local
+                       Data.Tree.Local
+                       Data.Tuple.Local
+                       Database.Esqueleto.Local
+                       Database.Persist.Class.Local
+                       Database.Persist.JSON
+                       Database.Persist.Sql.Local
+                       Database.Persist.Local
+                       Database.Persist.Local.Class.PersistEntityHierarchy
+                       Database.Persist.Local.RecursionDoc
+                       Diagrams.IntransitiveDAG
+                       Formatting.CaseInsensitive
+                       Language.Haskell.TH.Quote.Local
+                       Network.FedURI
+                       Network.HTTP.Client.Conduit.ActivityPub
+                       Network.HTTP.Digest
+                       Network.SSH.Local
+                       Text.Blaze.Local
+                       Text.Display
+                       Text.Email.Local
+                       Text.FilePath.Local
+                       Text.Jasmine.Local
+                       Web.ActivityAccess
+                       Web.ActivityPub
+                       Web.Hashids.Local
+                       Web.PathPieces.Local
+                       Yesod.ActivityPub
+                       Yesod.Auth.Unverified
+                       Yesod.Auth.Unverified.Creds
+                       Yesod.Auth.Unverified.Internal
+                       Yesod.FedURI
+                       Yesod.Hashids
+                       Yesod.MonadSite
+                       Yesod.Paginate.Local
+                       Yesod.Persist.Local
+                       Yesod.RenderSource
+                       Yesod.SessionEntity
+
+                       Vervis.Access
+                       Vervis.ActivityPub
+                       Vervis.ActivityPub.Recipient
+                       Vervis.ActorKey
+                       Vervis.API
+                       Vervis.Application
+                       Vervis.Avatar
+                       Vervis.BinaryBody
+                       Vervis.Changes
+                       Vervis.ChangeFeed
+                       Vervis.Client
+                       Vervis.Colour
+                       Vervis.Content
+                       Vervis.Darcs
+                       Vervis.Discussion
+                       Vervis.Federation
+                       Vervis.Federation.Auth
+                       Vervis.Federation.Discussion
+                       Vervis.Federation.Offer
+                       Vervis.Federation.Push
+                       Vervis.Federation.Ticket
+                       Vervis.Federation.Util
+                       Vervis.FedURI
+                       Vervis.Field.Key
+                       Vervis.Field.Person
+                       Vervis.Field.Project
+                       Vervis.Field.Repo
+                       Vervis.Field.Role
+                       Vervis.Field.Sharer
+                       Vervis.Field.Ticket
+                       Vervis.Field.Workflow
+                       Vervis.Form.Discussion
+                       Vervis.Form.Group
+                       Vervis.Form.Key
+                       Vervis.Form.Project
+                       Vervis.Form.Repo
+                       Vervis.Form.Role
+                       Vervis.Form.Ticket
+                       Vervis.Form.Workflow
+                       Vervis.Formatting
+                       Vervis.Foundation
+                       Vervis.Git
+                       Vervis.GraphProxy
+                       Vervis.Handler.Client
+                       Vervis.Handler.Common
+                       Vervis.Handler.Discussion
+                       Vervis.Handler.Git
+                       Vervis.Handler.Group
+                       Vervis.Handler.Home
+                       Vervis.Handler.Inbox
+                       Vervis.Handler.Key
+                       Vervis.Handler.Patch
+                       Vervis.Handler.Person
+                       Vervis.Handler.Project
+                       Vervis.Handler.Repo
+                       Vervis.Handler.Repo.Darcs
+                       Vervis.Handler.Repo.Git
+                       Vervis.Handler.Role
+                       Vervis.Handler.Sharer
+                       Vervis.Handler.Ticket
+                       Vervis.Handler.Wiki
+                       Vervis.Handler.Workflow
+                       Vervis.Hook
+                       Vervis.KeyFile
+                       Vervis.Migration
+                       Vervis.Migration.Model
+                       Vervis.Migration.TH
+                       Vervis.Model
+                       Vervis.Model.Entity
+                       Vervis.Model.Group
+                       Vervis.Model.Ident
+                       Vervis.Model.Repo
+                       Vervis.Model.Role
+                       Vervis.Model.Ticket
+                       Vervis.Model.TH
+                       Vervis.Model.Workflow
+                       Vervis.Paginate
+                       Vervis.Palette
+                       Vervis.Patch
+                       Vervis.Path
+                       Vervis.Query
+                       Vervis.Readme
+                       Vervis.RemoteActorStore
+                       Vervis.Role
+                       Vervis.Secure
+                       Vervis.Settings
+                       Vervis.Settings.StaticFiles
+                       Vervis.Settings.TH
+                       Vervis.SourceTree
+                       Vervis.Ssh
+                       Vervis.Style
+                       Vervis.Ticket
+                       Vervis.TicketFilter
+                       Vervis.Time
+                       Vervis.Widget
+                       Vervis.Widget.Discussion
+                       Vervis.Widget.Project
+                       Vervis.Widget.Repo
+                       Vervis.Widget.Role
+                       Vervis.Widget.Sharer
+                       Vervis.Widget.Ticket
+                       Vervis.Widget.Workflow
+                       Vervis.Wiki
+                       Vervis.WorkItem
+  -- other-modules:       
+  default-extensions:  TemplateHaskell
+                       QuasiQuotes
+                       OverloadedStrings
+                       MultiParamTypeClasses
+                       TypeFamilies
+                       GADTs
+                       GeneralizedNewtypeDeriving
+                       FlexibleContexts
+                       FlexibleInstances
+                       EmptyDataDecls
+                       NoMonomorphismRestriction
+                       DeriveDataTypeable
+                       ViewPatterns
+                       TupleSections
+                       RecordWildCards
+  build-depends:       aeson
+                       -- For activity JSOn display in /inbox test page
+                     , aeson-pretty
+                       -- for encoding and decoding of crypto public keys
+                     , asn1-encoding
+                     , asn1-types
+                       -- for parsing commands sent over SSH and Darcs patch
+                       -- metadata
+                     , attoparsec
+                     , base
+                       -- for hex display of Darcs patch hashes
+                     , base16-bytestring
+                     , base64-bytestring
+                       -- for Data.Binary.Local
+                     , binary
+                     , blaze-html
+                       -- for Data.EventTime.Local
+                     , blaze-markup
+                     , byteable
+                     , bytestring
+                       -- for Darcs.Local.PatchInfo.Parser
+                     , bytestring-lexing
+                     , case-insensitive
+                       -- for defining colors for use with diagrams
+                     , colour
+                     , conduit
+                       -- For httpAPEither
+                     , conduit-extra
+                     , containers
+                     , cryptonite
+                       -- for Storage.Hashed because hashed-storage seems
+                       -- unmaintained and darcs has its own copy
+                     , darcs
+                     , darcs-lights
+                     , darcs-rev
+                     , data-default
+                     , data-default-class
+                     , data-default-instances-bytestring
+                     , data-ordlist
+                       -- for drawing DAGs: RBAC role inheritance, etc.
+                       , diagrams-core
+                       , diagrams-lib
+                       , diagrams-svg
+                     , directory
+                       -- for Data.Git.Local
+                     , directory-tree
+                     , dlist
+                     , dvara
+                     , email-validate
+                     , email-validate-json
+                     , esqueleto
+                     , exceptions
+                     , fast-logger
+                       -- for building a message tree using DFS in
+                       -- Vervis.Discussion, possibly also used by some git
+                       -- graph related code?
+                     , fgl
+                     , file-embed
+                     , filepath
+                     , formatting
+                     , hashable
+                     , hashids
+                       -- for source file highlighting
+                     , highlighter2
+                     , http-client-signature
+                     , http-signature
+                     , git
+                     , hit-graph
+                     , hit-harder
+                     , hit-network
+                     -- currently discarding all JS so no need for minifier
+                     --, hjsmin
+                     -- 'git' uses it for 'GitTime'
+                     , hourglass
+                     , yesod-http-signature
+                     , http-client
+                     , http-client-tls
+                     , http-conduit
+                     , http-types
+                     , libravatar
+                     , memory
+                     , mime-mail
+                     , monad-control
+                     , monad-logger
+                       -- for Database.Persist.Local
+                     , mtl
+                     , network
+                     , network-uri
+                     , pandoc
+                     , pandoc-types
+                       -- for PathPiece instance for CI, Web.PathPieces.Local
+                     , path-pieces
+                     , patience
+                     , pem
+                     , persistent
+                     , persistent-email-address
+                     , persistent-graph
+                     , persistent-migration
+                     , persistent-postgresql
+                     , persistent-template
+                     , process
+                       -- for generating hashids salt
+                     , random
+                       -- for Database.Persist.Local
+                     , resourcet
+                     , safe
+                     , shakespeare
+                       -- for json debug highlighting in Yesod.RenderSource
+                     , skylighting
+                     , smtp-mail
+                     , ssh
+                       -- for holding actor key in a TVar
+                     , stm
+                       -- for rendering diagrams
+                     , svg-builder
+                       -- for text drawing in 'diagrams'
+                     , SVGFonts
+                     , template-haskell
+                     , text
+                     , these
+                     , time
+                     , time-interval
+                     , time-interval-aeson
+                     , time-units
+                     , tls
+                     , transformers
+                       -- probably should be replaced with lenses once I learn
+                     , tuple
+                       -- For making git hooks executable, i.e. set file mode
+                     , unix
+                       -- For httpAPEither
+                     , unliftio-core
+                     , unliftio
+                     , unordered-containers
+                     , vector
+                     , wai
+                     , wai-extra
+                     , wai-logger
+                     , warp
+                       -- for encoding and decoding of crypto public keys
+                     , x509
+                       -- for parsing darcs apply's changes XML from env var in
+                       -- the vervis post-apply hook program
+                     , xml
+                     , xss-sanitize
+                     , yaml
+                     , yesod
+                     , yesod-auth
+                     , yesod-auth-account
+                     , yesod-core
+                     , yesod-form
+                     , yesod-mail-send
+                     , yesod-newsfeed
+                     , yesod-static
+                     , yesod-persistent
+                       -- for reading gzipped darcs inventory via utils in
+                       -- Data.Attoparsec.ByteString.Local
+                     , zlib
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+
+  if flag(dev) || flag(library-only)
+    cpp-options:       -DDEVELOPMENT
+    ghc-options:       -Wall -fwarn-tabs -O0
+  else
+    ghc-options:       -Wall -fwarn-tabs -O2
+
+executable vervis
+  main-is:             main.hs
+  build-depends:       base, vervis
+  hs-source-dirs:      app
+  default-language:    Haskell2010
+  ghc-options:         -Wall -threaded -rtsopts -with-rtsopts=-N
+
+  if flag(library-only)
+    buildable: False
+
+executable vervis-post-receive
+  main-is:             main.hs
+  build-depends:       base, vervis
+  hs-source-dirs:      hook-git
+  default-language:    Haskell2010
+  ghc-options:         -Wall
+
+executable vervis-post-apply
+  main-is:             main.hs
+  build-depends:       base, vervis
+  hs-source-dirs:      hook-darcs
+  default-language:    Haskell2010
+  ghc-options:         -Wall
+
+test-suite test
+  main-is:             Spec.hs
+  default-extensions:  TemplateHaskell
+                       QuasiQuotes
+                       OverloadedStrings
+                       CPP
+                       MultiParamTypeClasses
+                       TypeFamilies
+                       GADTs
+                       GeneralizedNewtypeDeriving
+                       FlexibleContexts
+                       FlexibleInstances
+                       EmptyDataDecls
+                       NoMonomorphismRestriction
+                       DeriveDataTypeable
+                       ViewPatterns
+                       TupleSections
+  build-depends:       base
+                     , vervis
+                     , yesod-test >= 1.5.0.1 && < 1.6
+                     , yesod-core
+                     , yesod
+                     , persistent
+                     , persistent-postgresql
+                     , resourcet
+                     , monad-logger
+                     , shakespeare
+                     , transformers
+                     , hspec >= 2.0.0
+                     , aeson
+  hs-source-dirs:      test
+  default-language:    Haskell2010
+  ghc-options:         -Wall
+  type:                exitcode-stdio-1.0
+
+-- test-suite test-graph
+--   main-is:             Test.hs
+--   build-depends:       base
+--                      , fgl
+--                      , fgl-arbitrary
+--                      , hspec
+--                      , vervis
+--   hs-source-dirs:      test
+--   default-language:    Haskell2010
+--   ghc-options:         -Wall
+--   type:                exitcode-stdio-1.0

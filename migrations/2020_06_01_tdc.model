@@ -1,0 +1,17 @@
+TicketDependencyChildLocal
+    dep   TicketDependencyId
+    child LocalTicketId
+
+    UniqueTicketDependencyChildLocal dep
+
+TicketDependencyChildRemote
+    dep   TicketDependencyId
+    child RemoteObjectId
+
+    UniqueTicketDependencyChildRemote dep
+
+RemoteTicketDependency
+    ident RemoteObjectId
+    child LocalTicketId
+
+    UniqueRemoteTicketDependency ident

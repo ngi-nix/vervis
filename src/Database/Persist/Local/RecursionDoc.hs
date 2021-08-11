@@ -1,0 +1,160 @@
+{- This file is part of Vervis.
+ -
+ - Written in 2016 by fr33domlover <fr33domlover@riseup.net>.
+ -
+ - ♡ Copying is an act of love. Please copy, reuse and share.
+ -
+ - The author(s) have dedicated all copyright and related and neighboring
+ - rights to this software to the public domain worldwide. This software is
+ - distributed without any warranty.
+ -
+ - You should have received a copy of the CC0 Public Domain Dedication along
+ - with this software. If not, see
+ - <http://creativecommons.org/publicdomain/zero/1.0/>.
+ -}
+
+-- |
+-- = Intro
+--
+-- Recursive queries are performed by taking the output of a recursion step,
+-- possibly modifying it, and using the result as the input for the next
+-- recursion step. Like /persistent/ itself, the API provided here is a
+-- high-level, safe subset, and you can use 'rawSql' etc. for the less common
+-- cases or backend-specific features not covered by it. Instead of talking
+-- about recursion concepts, the API uses terms like /tree/ and /graph/.
+--
+-- This module supports two ways to represent hierarchy using persistent
+-- records:
+--
+-- 1. Forest (i.e. one or more trees)
+-- 2. Graph
+--
+-- If your hierarchy supports up to one parent per node, you'll probably take
+-- the forest approach. If multiple parents per node are supported, you'll
+-- probably take the graph approach. Note that this API is still new and
+-- experimental, and is based on experience working only with SQL. Suggestions
+-- and use cases are very welcome.
+--
+-- = Forest
+--
+-- In the forest model, the recursive step is done by matching between the /id/
+-- column of a certain entity and some other column. The idea is that you have
+-- an entity @Ent@ with a field of type @Maybe (Key Ent)@. Through that field,
+-- a node points to its parent node. Nodes without a parent are called root
+-- nodes. If there's a single such root node, you get a tree structure. Is
+-- there are multiple root nodes, there are multiple trees, i.e. a forest.
+--
+-- For example, suppose we have a `Message` type with a `messageParent` field.
+-- For given messages `a` and `b`, if `messageParent b == Just a` then `b` is a
+-- reply to `a`. Therefore, all the replies to a given message point to it
+-- using the `messageParent` field. And there can be replies to replies and so
+-- on, creating a tree of messages.
+--
+-- > Message
+-- >     author  PersonId
+-- >     content Text
+-- >     parent  MessageId Maybe
+--
+-- If we start with a single message and follow the `messageParent` values
+-- recursively, we'll be able to get a list (or a tree) of the __ancestors__ of
+-- the message. Our message /a/ may be a reply to some other message /b/, and
+-- /b/ may be a reply to message /c/ and so on. Eventually, if there are no
+-- cycles and it's really a tree structure, we'll reach the root message, which
+-- has no parent.
+--
+-- But there's another way to recurse. What if we wanted to find the replies
+-- for a given message? And the replies of the replies, and so on? In other
+-- words, the __decendants__ of a given message. Suppose we start with a
+-- message /a/. We get a list of the replies of /a/, i.e. message whose parent
+-- is `Just a`. Then we find the replies of those messages, i.e. the replies of
+-- the replies of /a/. And so on, recursively, until we can't find more replies
+-- and then we stop.
+--
+-- Therefore we can perform the recursion in one of two directions:
+--
+-- - __Towards the root nodes__, i.e. follow from a message to its parents.
+--   More generally, given a persistent entity type `Foobar`, follow
+--   recursively using a specific field of it, whose type is `FoobarId`.
+-- - __Towards leaf nodes__, i.e. find the children (i.e. replies) of a
+--   message, and then their children, and so on. More generally, given a
+--   persistent entity type `Foobar`, find other values referring to it using a
+--   specific field, whose type is `Maybe FoobarId`, and recursively find such
+--   values for the results we get and so on.
+--
+-- The 'RecursionDirection' type is used for specifying the direction.
+--
+-- When you follow all the children of an entity recursively, or all of its
+-- parents, we call the result you get the __transitive closure__ of the
+-- specific field you used. You can further specify the direction, i.e.
+-- __outward transitive closure__ or __inward transitive closure__. For
+-- examples, if you follow a message's parents recursively as in the example
+-- above, you get an outward transitive closure on the /parent/ field.
+--
+-- Note that the definition used here is __not__ the same as the mathematical
+-- definition. When you perform a recursive query without filters, you get not
+-- only the ancestors (or the decendants) of an entity, but also the root
+-- entity itself. In other words, even though a message is not a reply of
+-- itself, you'll still get it in the query result. If you want to get just the
+-- ancestors (or decendants), i.e. the actual transitive closer of the "is
+-- reply of" relation in the mathematical sense, use a filter to omit the root
+-- message based on the ID, i.e. @[MessageParent /= msgid]@.
+--
+-- Therefore, when the term "transitive closure" is used below, it means not
+-- just the ancestors (or decendants), but also the origin entity too.
+--
+-- = Graph
+--
+-- Sometimes a tree isn't enough. One common structure for hierarchies which
+-- isn't a tree is the DAG, Directed Acyclic Graph. A DAG is a graph which has
+-- no cycles. It allows a node to have an arbitrary number of parents, as long
+-- as a parent can't be a child of its own child, or more generally, a node
+-- can't be an ancestor of its ancestors.
+--
+-- For example, suppose you'd like to create an application that manages data
+-- about human languages. For each language you'd like to specify, from which
+-- older languages it developed. Some languages are simply decendants of older
+-- versions of themselves, but other languages are a mix of several older
+-- languages, or have a variety of influences.
+--
+-- In this case, each language may have multiple parents (and a language can't
+-- be an ancestor of itself). We need something more general than a tree.
+--
+-- There are probably various ways to represent such a graph in the various
+-- backends. This module provides a single way to do that, which is hopefully
+-- safe and works well on different kinds of backends. The idea is that you
+-- have two separate tables: One for the entities and another one for the
+-- parent-child relations between them. For example, we can have a @Language@
+-- entity, and a @LanguageOrigin@ entity with two fields, @parent@ and @child@,
+-- both of type @LanguageId@.
+--
+-- Before you can use the graph approach you should define an instance of the
+-- 'PersistEntityGraph' class. That class creates a relation between the two
+-- entities (@Language@ and @LanguageOrigin@ in the example).
+--
+-- The queries in the graph approach conceptually run 2 steps.
+--
+-- In the first step, build a set of edge-node pairs. It contains all the
+-- relevant edges found, and the parent of child side of the edge, depending on
+-- the recursion direction. If you query for ancestors, the node is the
+-- parent-side of the edge. If you query for decendants, the node is the
+-- child-side of the edge.
+--
+-- In the second step, run a query on the resulting set of pairs. The functions
+-- take 2 separate lists of filters, one for the nodes and one for the edges,
+-- and apply both, i.e. they AND the filters. Mixing and ORing of node and edge
+-- filters is currently not supported because it requires complicating
+-- persistent's filters a bit (or adding something on top), but it's certainly
+-- possible to add that.
+--
+-- - The read operations return pairs after optional filtering and ordering.
+--   The default ordering depends on the backend.
+-- - The update operations take an update list for nodes and an update list for
+--   edges. If you want to update just nodes or just edges, pass an empty list.
+-- - The deletion operations take a 'GraphDeleteMode' parameter which specifies
+--   whether to delete just the selected edges, or also the nodes selected with
+--   them
+--
+-- Note that unlike in the forest approach, here the queries don't return the
+-- root node whose key is passed to them. If you want the record of the root,
+-- obtain it the usual way, using 'get'.
+module Database.Persist.Local.RecursionDoc () where

@@ -1,0 +1,18 @@
+Ticket
+    project     Int64
+    number      Int
+    created     UTCTime
+    creator     Int64
+    title       Text
+    source      Text                -- Pandoc Markdown
+    description Text                -- HTML
+    assignee    Int64         Maybe
+    status      Text
+    closed      UTCTime
+    closer      Int64
+    discuss     Int64
+    followers   Int64
+
+    UniqueTicket project number
+    UniqueTicketDiscussion discuss
+    UniqueTicketFollowers followers

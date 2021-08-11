@@ -1,0 +1,11 @@
+TicketProjectLocal
+    context TicketContextLocalId
+    project ProjectId
+
+    UniqueTicketProjectLocal context
+
+TicketRepoLocal
+    context TicketContextLocalId
+    repo    RepoId
+
+    UniqueTicketRepoLocal context

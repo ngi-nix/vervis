@@ -1,0 +1,29 @@
+RemoteRawObject
+    content  PersistJSONObject
+    received UTCTime
+
+RemoteDiscussion
+    sharer        RemoteSharerId
+    instance      InstanceId
+    ident         Text
+    discuss       DiscussionId
+
+    UniqueRemoteDiscussionIdent instance ident
+    UniqueRemoteDiscussion discuss
+
+LocalMessage
+    author         PersonId
+    rest           MessageId
+
+    UniqueLocalMessage rest
+
+RemoteMessage
+    author     RemoteSharerId
+    instance   InstanceId
+    ident      Text
+    rest       MessageId
+    raw        RemoteRawObjectId
+    lostParent Text              Maybe
+
+    UniqueRemoteMessageIdent instance ident
+    UniqueRemoteMessage rest

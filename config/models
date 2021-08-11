@@ -1,0 +1,583 @@
+-- This file is part of Vervis.
+--
+-- Written in 2016, 2018, 2019, 2020 by fr33domlover <fr33domlover@riseup.net>.
+--
+-- ♡ Copying is an act of love. Please copy, reuse and share.
+--
+-- The author(s) have dedicated all copyright and related and neighboring
+-- rights to this software to the public domain worldwide. This software is
+-- distributed without any warranty.
+--
+-- You should have received a copy of the CC0 Public Domain Dedication along
+-- with this software. If not, see
+-- <http://creativecommons.org/publicdomain/zero/1.0/>.
+
+-------------------------------------------------------------------------------
+-- Instances
+-------------------------------------------------------------------------------
+
+Instance
+    host Host
+
+    UniqueInstance host
+
+RemoteObject
+    instance InstanceId
+    ident    LocalURI
+
+    UniqueRemoteObject instance ident
+
+-------------------------------------------------------------------------------
+-- People
+-------------------------------------------------------------------------------
+
+Sharer
+    ident   ShrIdent
+    name    Text     Maybe
+    created UTCTime
+
+    UniqueSharer ident
+
+Person
+    ident               SharerId
+    login               Text
+    passphraseHash      ByteString
+    email               EmailAddress
+    verified            Bool
+    verifiedKey         Text
+    verifiedKeyCreated  UTCTime
+    resetPassKey        Text
+    resetPassKeyCreated UTCTime
+    about               Text
+    inbox               InboxId
+    outbox              OutboxId
+    followers           FollowerSetId
+
+    UniquePersonIdent ident
+    UniquePersonLogin login
+    UniquePersonEmail email
+    UniquePersonInbox inbox
+    UniquePersonOutbox outbox
+    UniquePersonFollowers followers
+
+Outbox
+
+OutboxItem
+    outbox    OutboxId
+    activity  PersistJSONObject
+    published UTCTime
+
+Inbox
+
+InboxItem
+    unread Bool
+
+InboxItemLocal
+    inbox    InboxId
+    activity OutboxItemId
+    item     InboxItemId
+
+    UniqueInboxItemLocal inbox activity
+    UniqueInboxItemLocalItem item
+
+RemoteActivity
+    ident    RemoteObjectId
+    content  PersistJSONObject
+    received UTCTime
+
+    UniqueRemoteActivity ident
+
+InboxItemRemote
+    inbox    InboxId
+    activity RemoteActivityId
+    item     InboxItemId
+
+    UniqueInboxItemRemote inbox activity
+    UniqueInboxItemRemoteItem item
+
+UnlinkedDelivery
+    recipient  UnfetchedRemoteActorId
+    activity   OutboxItemId
+    forwarding Bool
+    running    Bool
+
+    UniqueUnlinkedDelivery recipient activity
+
+Delivery
+    recipient  RemoteActorId
+    activity   OutboxItemId
+    forwarding Bool
+    running    Bool
+
+    UniqueDelivery recipient activity
+
+Forwarding
+    recipient   RemoteActorId
+    activity    RemoteActivityId
+    activityRaw ByteString
+    signature   ByteString
+    running     Bool
+
+    UniqueForwarding recipient activity
+
+ForwarderSharer
+    task   ForwardingId
+    sender SharerId
+
+    UniqueForwarderSharer task
+
+ForwarderProject
+    task   ForwardingId
+    sender ProjectId
+
+    UniqueForwarderProject task
+
+ForwarderRepo
+    task   ForwardingId
+    sender RepoId
+
+    UniqueForwarderRepo task
+
+VerifKey
+    ident    LocalRefURI
+    instance InstanceId
+    expires  UTCTime Maybe
+    public   PublicVerifKey
+    sharer   RemoteActorId Maybe
+
+    UniqueVerifKey instance ident
+
+VerifKeySharedUsage
+    key  VerifKeyId
+    user RemoteActorId
+
+    UniqueVerifKeySharedUsage key user
+
+UnfetchedRemoteActor
+    ident RemoteObjectId
+    since UTCTime Maybe
+
+    UniqueUnfetchedRemoteActor ident
+
+RemoteActor
+    ident      RemoteObjectId
+    name       Text Maybe
+    inbox      LocalURI
+    followers  LocalURI       Maybe
+    errorSince UTCTime        Maybe
+
+    UniqueRemoteActor ident
+
+RemoteCollection
+    ident RemoteObjectId
+
+    UniqueRemoteCollection ident
+
+FollowRemoteRequest
+    person   PersonId
+    target   FedURI
+    recip    FedURI Maybe
+    public   Bool
+    activity OutboxItemId
+
+    UniqueFollowRemoteRequest person target
+    UniqueFollowRemoteRequestActivity activity
+
+FollowRemote
+    person PersonId
+    recip  RemoteActorId -- actor managing the followed object
+    target FedURI        -- the followed object
+    public Bool
+    follow OutboxItemId
+    accept RemoteActivityId
+
+    UniqueFollowRemote person target
+    UniqueFollowRemoteFollow follow
+    UniqueFollowRemoteAccept accept
+
+FollowerSet
+
+Follow
+    person PersonId
+    target FollowerSetId
+    public Bool
+    follow OutboxItemId
+    accept OutboxItemId
+
+    UniqueFollow person target
+    UniqueFollowFollow follow
+    UniqueFollowAccept accept
+
+RemoteFollow
+    actor  RemoteActorId
+    target FollowerSetId
+    public Bool
+    follow RemoteActivityId
+    accept OutboxItemId
+
+    UniqueRemoteFollow actor target
+    UniqueRemoteFollowFollow follow
+    UniqueRemoteFollowAccept accept
+
+SshKey
+    ident   KyIdent
+    person  PersonId
+    algo    ByteString
+    content ByteString
+
+    UniqueSshKey person ident
+
+Group
+    ident SharerId
+
+    UniqueGroup ident
+
+GroupMember
+    person PersonId
+    group  GroupId
+    role   GroupRole
+    joined UTCTime
+
+    UniqueGroupMember person group
+
+Role
+    ident  RlIdent
+    sharer SharerId
+    desc   Text
+
+    UniqueRole sharer ident
+
+RoleInherit
+    parent RoleId
+    child  RoleId
+
+    UniqueRoleInherit parent child
+
+RoleAccess
+    role RoleId
+    op   ProjectOperation
+
+    UniqueRoleAccess role op
+
+-------------------------------------------------------------------------------
+-- Projects
+-------------------------------------------------------------------------------
+
+Project
+    ident      PrjIdent
+    sharer     SharerId
+    name       Text          Maybe
+    desc       Text          Maybe
+    workflow   WorkflowId
+    nextTicket Int
+    wiki       RepoId        Maybe
+    collabUser RoleId        Maybe
+    collabAnon RoleId        Maybe
+    inbox      InboxId
+    outbox     OutboxId
+    followers  FollowerSetId
+
+    UniqueProject ident sharer
+    UniqueProjectInbox inbox
+    UniqueProjectOutbox outbox
+    UniqueProjectFollowers followers
+
+Repo
+    ident      RpIdent
+    sharer     SharerId
+    vcs        VersionControlSystem
+    project    ProjectId            Maybe
+    desc       Text                 Maybe
+    mainBranch Text
+    collabUser RoleId               Maybe
+    collabAnon RoleId               Maybe
+    inbox      InboxId
+    outbox     OutboxId
+    followers  FollowerSetId
+
+    UniqueRepo ident sharer
+    UniqueRepoInbox inbox
+    UniqueRepoOutbox outbox
+    UniqueRepoFollowers followers
+
+Workflow
+    sharer SharerId
+    ident  WflIdent
+    name   Text          Maybe
+    desc   Text          Maybe
+    scope  WorkflowScope
+
+    UniqueWorkflow sharer ident
+
+WorkflowField
+    workflow     WorkflowId
+    ident        FldIdent
+    name         Text
+    desc         Text           Maybe
+    type         WorkflowFieldType
+    enm          WorkflowEnumId Maybe
+    required     Bool
+    constant     Bool
+    filterNew    Bool
+    filterTodo   Bool
+    filterClosed Bool
+    color        Int            Maybe
+
+    UniqueWorkflowField workflow ident
+
+WorkflowEnum
+    workflow WorkflowId
+    ident    EnmIdent
+    name     Text
+    desc     Text       Maybe
+
+    UniqueWorkflowEnum workflow ident
+
+WorkflowEnumCtor
+    enum WorkflowEnumId
+    name Text
+    desc Text           Maybe
+
+    UniqueWorkflowEnumCtor enum name
+
+TicketParamText
+    ticket TicketId
+    field  WorkflowFieldId
+    value  Text
+
+    UniqueTicketParamText ticket field
+
+TicketParamEnum
+    ticket TicketId
+    field  WorkflowFieldId
+    value  WorkflowEnumCtorId
+
+    UniqueTicketParamEnum ticket field value
+
+TicketParamClass
+    ticket TicketId
+    field  WorkflowFieldId
+
+    UniqueTicketParamClass ticket field
+
+Ticket
+    number      Int           Maybe
+    created     UTCTime
+    title       Text                -- HTML
+    source      Text                -- Pandoc Markdown
+    description Text                -- HTML
+    assignee    PersonId      Maybe
+    status      TicketStatus
+
+    -- UniqueTicket project number
+
+LocalTicket
+    ticket    TicketId
+    discuss   DiscussionId
+    followers FollowerSetId
+
+    UniqueLocalTicket           ticket
+    UniqueLocalTicketDiscussion discuss
+    UniqueLocalTicketFollowers  followers
+
+RemoteTicket
+    ticket  TicketAuthorRemoteId
+    ident   RemoteObjectId
+    discuss RemoteDiscussionId
+
+    UniqueRemoteTicket        ticket
+    UniqueRemoteTicketIdent   ident
+    UniqueRemoteTicketDiscuss discuss
+
+TicketContextLocal
+    ticket  TicketId
+    accept  OutboxItemId
+
+    UniqueTicketContextLocal       ticket
+    UniqueTicketContextLocalAccept accept
+
+TicketProjectLocal
+    context TicketContextLocalId
+    project ProjectId
+
+    UniqueTicketProjectLocal context
+
+TicketRepoLocal
+    context TicketContextLocalId
+    repo    RepoId
+    branch  Text Maybe
+
+    UniqueTicketRepoLocal context
+
+TicketProjectRemote
+    ticket  TicketAuthorLocalId
+    tracker RemoteActorId
+    project RemoteObjectId Maybe -- specify if not same as tracker
+                                 -- For MRs it may be either a remote repo or
+                                 -- a branch of it
+
+    UniqueTicketProjectRemote ticket
+
+TicketProjectRemoteAccept
+    ticket   TicketProjectRemoteId
+    activity RemoteActivityId
+    accept   Bool
+    result   LocalURI Maybe
+
+    UniqueTicketProjectRemoteAccept         ticket
+    UniqueTicketProjectRemoteAcceptActivity activity
+
+TicketAuthorLocal
+    ticket LocalTicketId
+    author PersonId
+    open   OutboxItemId
+
+    UniqueTicketAuthorLocal     ticket
+    UniqueTicketAuthorLocalOpen open
+
+TicketAuthorRemote
+    ticket TicketContextLocalId
+    author RemoteActorId
+    open   RemoteActivityId
+
+    UniqueTicketAuthorRemote     ticket
+    UniqueTicketAuthorRemoteOpen open
+
+TicketUnderProject
+    project TicketContextLocalId
+    author  TicketAuthorLocalId
+
+    UniqueTicketUnderProjectProject project
+    UniqueTicketUnderProjectAuthor  author
+
+Patch
+    ticket  TicketId
+    created UTCTime
+    content Text
+
+TicketDependencyOffer
+    offer InboxItemId
+    child LocalTicketId
+
+    UniqueTicketDependencyOffer offer
+
+RemoteTicketDependency
+    ident  RemoteObjectId
+    child  LocalTicketId
+    accept RemoteActivityId
+
+    UniqueRemoteTicketDependency ident
+    UniqueRemoteTicketDependencyAccept accept
+
+LocalTicketDependency
+    parent  LocalTicketId
+    created UTCTime
+    accept  OutboxItemId
+
+TicketDependencyChildLocal
+    dep   LocalTicketDependencyId
+    child LocalTicketId
+
+    UniqueTicketDependencyChildLocal dep
+
+TicketDependencyChildRemote
+    dep   LocalTicketDependencyId
+    child RemoteObjectId
+
+    UniqueTicketDependencyChildRemote dep
+
+TicketDependencyAuthorLocal
+    dep    LocalTicketDependencyId
+    author PersonId
+    open   OutboxItemId
+
+    UniqueTicketDependencyAuthorLocal     dep
+    UniqueTicketDependencyAuthorLocalOpen open
+
+TicketDependencyAuthorRemote
+    dep    LocalTicketDependencyId
+    author RemoteActorId
+    open   RemoteActivityId
+
+    UniqueTicketDependencyAuthorRemote     dep
+    UniqueTicketDependencyAuthorRemoteOpen open
+
+TicketClaimRequest
+    person  PersonId
+    ticket  TicketId
+    message Text     -- Assume this is Pandoc Markdown
+    created UTCTime
+
+    UniqueTicketClaimRequest person ticket
+
+TicketResolve
+    ticket LocalTicketId
+    accept OutboxItemId
+
+    UniqueTicketResolve ticket
+    UniqueTicketResolveAccept accept
+
+TicketResolveLocal
+    ticket   TicketResolveId
+    activity OutboxItemId
+
+    UniqueTicketResolveLocal ticket
+    UniqueTicketResolveLocalActivity activity
+
+TicketResolveRemote
+    ticket   TicketResolveId
+    activity RemoteActivityId
+    actor    RemoteActorId
+
+    UniqueTicketResolveRemote ticket
+    UniqueTicketResolveRemoteActivity activity
+
+Discussion
+
+RemoteDiscussion
+    ident   RemoteObjectId
+    discuss DiscussionId
+
+    UniqueRemoteDiscussionIdent ident
+    UniqueRemoteDiscussion      discuss
+
+Message
+    created UTCTime
+    source  Text               -- Pandoc Markdown
+    content Text               -- HTML
+    parent  MessageId    Maybe
+    root    DiscussionId
+
+LocalMessage
+    author         PersonId
+    rest           MessageId
+    create         OutboxItemId
+    unlinkedParent FedURI    Maybe
+
+    UniqueLocalMessage rest
+    UniqueLocalMessageCreate create
+
+RemoteMessage
+    author     RemoteActorId
+    ident      RemoteObjectId
+    rest       MessageId
+    create     RemoteActivityId
+    lostParent FedURI            Maybe
+
+    UniqueRemoteMessageIdent  ident
+    UniqueRemoteMessage       rest
+    UniqueRemoteMessageCreate create
+
+RepoCollab
+    repo   RepoId
+    person PersonId
+    role   RoleId   Maybe
+
+    UniqueRepoCollab repo person
+
+ProjectCollab
+    project ProjectId
+    person  PersonId
+    role    RoleId    Maybe
+
+    UniqueProjectCollab project person

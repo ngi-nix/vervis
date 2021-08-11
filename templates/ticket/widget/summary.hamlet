@@ -1,0 +1,62 @@
+$# This file is part of Vervis.
+$#
+$# Written in 2016, 2019, 2020 by fr33domlover <fr33domlover@riseup.net>.
+$#
+$# ♡ Copying is an act of love. Please copy, reuse and share.
+$#
+$# The author(s) have dedicated all copyright and related and neighboring
+$# rights to this software to the public domain worldwide. This software is
+$# distributed without any warranty.
+$#
+$# You should have received a copy of the CC0 Public Domain Dedication along
+$# with this software. If not, see
+$# <http://creativecommons.org/publicdomain/zero/1.0/>.
+
+<span .ticket-status-column>
+  $case tsStatus ts
+    $of TSNew
+      <span .#{cNew}>
+        ⬚
+    $of TSTodo
+      <span .#{cTodo}>
+        ☐
+    $of TSClosed
+      <span .#{cClosed}>
+        ☒
+
+<span .ticket-number-column>
+  <a href=@{ticketRoute ts}>
+    ### 
+
+<span .ticket-date-column>
+  #{showDate $ tsCreatedAt ts}
+
+<span .ticket-sharer-column>
+  ^{sharerLinkFedW $ first fst $ tsCreatedBy ts}
+
+<span .ticket-title-column>
+  <a href=@{ticketRoute ts}>
+    #{preEscapedToHtml $ tsTitle ts}
+  $forall wf <- tsLabels ts
+    $maybe wfcol <- workflowFieldColor wf
+      <span .label#{wfcol}>
+        [#{workflowFieldName wf}]
+    $nothing
+      <span .label-nocolor>
+        [#{workflowFieldName wf}]
+
+<span .ticket-tree-column>
+  $if tsComments ts > 0
+    💬
+    #{tsComments ts}
+
+$maybe params <- mparams
+  <span .ticket-node-column>
+    <a href="#node-#{keyHashidText $ encodeLT $ tsId ts}" title="Jump to subtree">
+      ☝
+    $maybe route <- mroute
+      <a href=@?{(route, params)} title="Move subtree here">
+        ☚
+$nothing
+  <span .ticket-node-column>
+    <a id="node-#{keyHashidText $ encodeLT $ tsId ts}">

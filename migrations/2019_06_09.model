@@ -1,0 +1,15 @@
+Inbox
+
+Project
+    ident      PrjIdent
+    sharer     Int64
+    name       Text          Maybe
+    desc       Text          Maybe
+    workflow   Int64
+    nextTicket Int
+    wiki       Int64         Maybe
+    collabUser Int64         Maybe
+    collabAnon Int64         Maybe
+    inbox      InboxId
+
+    UniqueProject ident sharer

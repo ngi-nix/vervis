@@ -1,0 +1,30 @@
+Discussion
+
+FollowerSet
+
+Person
+
+Ticket
+    number      Int           Maybe
+    created     UTCTime
+    title       Text                -- HTML
+    source      Text                -- Pandoc Markdown
+    description Text                -- HTML
+    assignee    PersonId      Maybe
+    status      Text
+    closed      UTCTime
+    closer      PersonId      Maybe
+
+LocalTicket
+    ticket    TicketId
+    discuss   DiscussionId
+    followers FollowerSetId
+
+    UniqueLocalTicket           ticket
+    UniqueLocalTicketDiscussion discuss
+    UniqueLocalTicketFollowers  followers
+
+LocalTicketDependency
+    parent    TicketId
+    parentNew LocalTicketId
+    created   UTCTime

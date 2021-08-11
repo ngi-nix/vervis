@@ -1,0 +1,4 @@
+RemoteCollection
+    ident RemoteObjectId
+
+    UniqueRemoteCollection ident

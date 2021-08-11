@@ -1,0 +1,17 @@
+InboxItemLocal
+    person   PersonId
+    activity OutboxItemId
+
+    UniqueInboxItemLocal person activity
+
+Follow
+    person PersonId
+    target FollowerSetId
+
+    UniqueFollow person target
+
+RemoteFollow
+    actor  RemoteSharerId
+    target FollowerSetId
+
+    UniqueRemoteFollow actor target

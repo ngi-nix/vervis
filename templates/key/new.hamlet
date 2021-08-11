@@ -1,0 +1,26 @@
+$# This file is part of Vervis.
+$#
+$# Written in 2016, 2019 by fr33domlover <fr33domlover@riseup.net>.
+$#
+$# ♡ Copying is an act of love. Please copy, reuse and share.
+$#
+$# The author(s) have dedicated all copyright and related and neighboring
+$# rights to this software to the public domain worldwide. This software is
+$# distributed without any warranty.
+$#
+$# You should have received a copy of the CC0 Public Domain Dedication along
+$# with this software. If not, see
+$# <http://creativecommons.org/publicdomain/zero/1.0/>.
+
+<p>
+  Enter the details and click "Submit" to add a new SSH key.
+
+<p>
+  Currently, the only supported key type is RSA (i.e. public keys that start
+  with the "ssh-rsa"). Ed25519 support is planned; if you'd like that, open a
+  ticket or tell me about it, to make it a higher priority :)
+
+<form method=POST action=@{KeysR} enctype=#{enctype}>
+  ^{widget}
+  <div class="submit">
+    <input type="submit" value="Add key">

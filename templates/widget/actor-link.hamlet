@@ -1,0 +1,31 @@
+$# This file is part of Vervis.
+$#
+$# Written in 2016, 2019 by fr33domlover <fr33domlover@riseup.net>.
+$#
+$# ♡ Copying is an act of love. Please copy, reuse and share.
+$#
+$# The author(s) have dedicated all copyright and related and neighboring
+$# rights to this software to the public domain worldwide. This software is
+$# distributed without any warranty.
+$#
+$# You should have received a copy of the CC0 Public Domain Dedication along
+$# with this software. If not, see
+$# <http://creativecommons.org/publicdomain/zero/1.0/>.
+
+$case actor
+  $of MessageTreeNodeLocal _lmid s
+    <a href=@{SharerR $ sharerIdent s}>
+      $maybe name <- sharerName s
+        #{name}
+      $nothing
+        #{shr2text $ sharerIdent s}
+    <span>
+      ./s/#{shr2text $ sharerIdent s}
+  $of MessageTreeNodeRemote h _luMsg luAuthor mname
+    <a href="#{renderObjURI $ ObjURI h luAuthor}">
+      $maybe name <- mname
+        #{name}
+      $nothing
+        (?)
+    <span>
+      #{shortURI h luAuthor}

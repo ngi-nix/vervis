@@ -1,0 +1,106 @@
+$# This file is part of Vervis.
+$#
+$# Written in 2016, 2018, 2019 by fr33domlover <fr33domlover@riseup.net>.
+$#
+$# ♡ Copying is an act of love. Please copy, reuse and share.
+$#
+$# The author(s) have dedicated all copyright and related and neighboring
+$# rights to this software to the public domain worldwide. This software is
+$# distributed without any warranty.
+$#
+$# You should have received a copy of the CC0 Public Domain Dedication along
+$# with this software. If not, see
+$# <http://creativecommons.org/publicdomain/zero/1.0/>.
+
+<p>
+  Vervis is a work-in-progress federated project and repository hosting and
+  collaboration platform. Its development is meant to help form the ForgeFed
+  specification for project hosting platform federation, and hopefully get
+  existing platforms (such as Gitea, Gogs, GitLab CE, etc.) to support it.
+
+<p>
+  Vervis is being used for its own development:
+  <a href="https://dev.angeley.es/s/fr33domlover/p/vervis">
+    Vervis project page
+
+<p>
+  Vervis is a <a href="https://peers.community">Peers community</a> project.
+
+<p>
+  Vervis is a web application written in the Haskell programming language and
+  the Yesod web framework. It's free as in freedom, under AGPLv3. It's being
+  developed by fr33domlover, who can be found under this nickname on Freenode
+  in the #peers channel.
+
+<p>
+  Vervis currently supports Git and Darcs repositories.
+
+<ul>
+  <li>
+    Vervis web app
+    <a href="https://dev.angeley.es/s/fr33domlover/r/vervis">
+      source code
+    (it's a <a href="http://darcs.net">Darcs</a> repository)
+  <li>
+    IRC:
+    <a href="https://kiwiirc.com/client/irc.freenode.net/#vervis">
+      #vervis @ Freenode
+  <li>
+    Matrix:
+    <a href="https://matrix.to/#/#vervis:angeley.es">
+      #vervis:angeley.es
+  <li>
+    ForgeFed
+    <a href="https://framalistes.org/sympa/info/git-federation">
+      mailing list
+
+<h2>Repos
+
+<table>
+  <tr>
+    <th>Sharer
+    <th>Project
+    <th>Repo
+    <th>VCS
+    <th>Last change
+  $forall (sharer, mproj, repo, vcs, ago) <- rowsRepo
+    <tr>
+      <td>
+        <a href=@{SharerR sharer}>#{shr2text sharer}
+      <td>
+        $maybe proj <- mproj
+          <a href=@{ProjectR sharer proj}>#{prj2text proj}
+        $nothing
+          (none)
+      <td>
+        <a href=@{RepoR sharer repo}>#{rp2text repo}
+      <td>
+        $case vcs
+          $of VCSDarcs
+            Darcs
+          $of VCSGit
+            Git
+      <td>
+        $maybe t <- ago
+          #{t}
+        $nothing
+          Error
+
+<h2>Projects without repos
+
+<table>
+  <tr>
+    <th>Sharer
+    <th>Project
+  $forall (E.Value sharer, E.Value project) <- rowsProject
+    <tr>
+      <td>
+        <a href=@{SharerR sharer}>#{shr2text sharer}
+      <td>
+        <a href=@{ProjectR sharer project}>#{prj2text project}
+
+<h2>People
+
+<p>
+  See
+  <a href=@{PeopleR}>people</a>.

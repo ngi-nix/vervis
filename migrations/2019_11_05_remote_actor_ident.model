@@ -1,0 +1,38 @@
+Instance
+    host Host
+
+    UniqueInstance host
+
+RemoteObject
+    instance InstanceId
+    ident    LocalURI
+
+    UniqueRemoteObject instance ident
+
+UnfetchedRemoteActor
+    instance InstanceId
+    ident    LocalURI
+    identNew RemoteObjectId
+    since    UTCTime Maybe
+
+    UniqueUnfetchedRemoteActor instance ident
+    UniqueUnfetchedRemoteActorNew identNew
+
+RemoteActor
+    ident      LocalURI
+    instance   InstanceId
+    identNew   RemoteObjectId
+    name       Text Maybe
+    inbox      LocalURI
+    errorSince UTCTime Maybe
+
+    UniqueRemoteActor instance ident
+    UniqueRemoteActorNew identNew
+
+RemoteCollection
+    instance   InstanceId
+    ident      LocalURI
+    identNew   RemoteObjectId
+
+    UniqueRemoteCollection instance ident
+    UniqueRemoteCollectionNew identNew

@@ -1,0 +1,8 @@
+Discussion
+
+Message
+    created UTCTime
+    source  Text               -- Pandoc Markdown
+    content Text               -- HTML
+    parent  MessageId    Maybe
+    root    DiscussionId

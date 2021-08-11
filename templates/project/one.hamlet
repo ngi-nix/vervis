@@ -1,0 +1,54 @@
+$# This file is part of Vervis.
+$#
+$# Written in 2016, 2019 by fr33domlover <fr33domlover@riseup.net>.
+$#
+$# ♡ Copying is an act of love. Please copy, reuse and share.
+$#
+$# The author(s) have dedicated all copyright and related and neighboring
+$# rights to this software to the public domain worldwide. This software is
+$# distributed without any warranty.
+$#
+$# You should have received a copy of the CC0 Public Domain Dedication along
+$# with this software. If not, see
+$# <http://creativecommons.org/publicdomain/zero/1.0/>.
+
+<div>
+  <span>
+    $maybe name <- projectName project
+      #{name}
+    $nothing
+      #{prj2text proj}
+  $maybe desc <- projectDesc project
+    -
+    <span>#{desc}
+
+^{personNavW shar}
+
+^{projectNavW project workflow wsharer shar proj}
+
+^{followButton}
+
+<h2>Repos
+
+$if null repos
+  <p>This project doesn’t contain repositories.
+$else
+  <table>
+    <tr>
+      <th>Name
+      <th>VCS
+      <th>Description
+    $forall Entity _ repository <- repos
+      <tr>
+        <td>
+          <a href=@{RepoR shar $ repoIdent repository}>
+            #{rp2text $ repoIdent repository}
+        <td>
+          $case repoVcs repository
+            $of VCSDarcs
+              Darcs
+            $of VCSGit
+              Git
+        <td>
+          $maybe desc <- repoDesc repository
+            #{desc}

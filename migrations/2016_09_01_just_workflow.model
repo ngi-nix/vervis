@@ -1,0 +1,7 @@
+Workflow
+    sharer SharerId
+    ident  Text
+    name   Text          Maybe
+    desc   Text          Maybe
+
+    UniqueWorkflow sharer ident

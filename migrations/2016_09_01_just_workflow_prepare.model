@@ -1,0 +1,16 @@
+-- This is in a separate file from the rest of the entities added on the same
+-- day because it is used for creating a dummy public workflow for DB
+-- migrations. Since each project is required to have a workflow, and initially
+-- there's none, we make a dummy one.
+
+Sharer
+
+Project
+
+Workflow
+    sharer SharerId
+    ident  Text
+    name   Text          Maybe
+    desc   Text          Maybe
+
+    UniqueWorkflow sharer ident

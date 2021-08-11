@@ -1,0 +1,295 @@
+/* This file is part of Vervis.
+ *
+ * Written in 2016 by fr33domlover <fr33domlover@riseup.net>.
+ *
+ * ♡ Copying is an act of love. Please copy, reuse and share.
+ *
+ * The author(s) have dedicated all copyright and related and neighboring
+ * rights to this software to the public domain worldwide. This software is
+ * distributed without any warranty.
+ *
+ * You should have received a copy of the CC0 Public Domain Dedication along
+ * with this software. If not, see
+ * <http://creativecommons.org/publicdomain/zero/1.0/>.
+ */
+
+/* Comment */
+.c
+    color: #ff0000
+    background-color: #ffffff
+
+/* Error */
+.err
+    color: #ff0000
+    background-color: #ffffff
+
+/* Keyword */
+.k
+    color: #{dark magenta}
+
+/* Comment.Multiline */
+.cm
+    color: #{dark blue}
+
+/* Comment.Preproc */
+.cp
+    color: #ff0000
+    background-color: #ffffff
+
+/* Comment.Single */
+.c1
+    color: #{dark blue}
+
+/* Comment.Special */
+.cs
+    color: #ff0000
+    background-color: #ffffff
+
+/* Generic.Deleted */
+.gd
+    color: #ff0000
+    background-color: #ffffff
+
+/* Generic.Emph */
+.ge
+    font-style: italic
+
+/* Generic.Error */
+.gr
+    color: #ff0000
+    background-color: #ffffff
+
+/* Generic.Heading */
+.gh
+    color: #ff0000
+    background-color: #ffffff
+
+/* Generic.Inserted */
+.gi
+    color: #ff0000
+    background-color: #ffffff
+
+/* Generic.Output */
+.go
+    color: #ff0000
+    background-color: #ffffff
+
+/* Generic.Prompt */
+.gp
+    color: #ff0000
+    background-color: #ffffff
+
+/* Generic.Strong */
+.gs
+    font-weight: bold
+
+/* Generic.Subheading */
+.gu
+    color: #ff0000
+    background-color: #ffffff
+
+/* Generic.Traceback */
+.gt
+    color: #ff0000
+    background-color: #ffffff
+
+/* Keyword.Constant */
+.kc
+    color: #ff0000
+    background-color: #ffffff
+
+/* Keyword.Declaration */
+.kd
+    color: #ff0000
+    background-color: #ffffff
+
+/* Keyword.Namespace */
+.kn
+    color: #ff0000
+    background-color: #ffffff
+
+/* Keyword.Pseudo */
+.kp
+    color: #ff0000
+    background-color: #ffffff
+
+/* Keyword.Reserved */
+.kr
+    color: #{dark green}
+
+/* Keyword.Type */
+.kt
+    color: #{plain}
+
+/* Literal.Number */
+.m
+    color: #ff0000
+    background-color: #ffffff
+
+/* Literal.String */
+.s
+    color: #{dark red}
+
+/* Name.Attribute */
+.na
+    color: #ff0000
+    background-color: #ffffff
+
+/* Name.Builtin */
+.nb
+    color: #{plain}
+
+/* Name.Class */
+.nc
+    color: #ff0000
+    background-color: #ffffff
+
+/* Name.Constant */
+.no
+    color: #ff0000
+    background-color: #ffffff
+
+/* Name.Decorator */
+.nd
+    color: #ff0000
+    background-color: #ffffff
+
+/* Name.Exception */
+.ne
+    color: #ff0000
+    background-color: #ffffff
+
+/* Name.Function */
+.nf
+    color: #{plain}
+
+/* Name.Label */
+.nl
+    color: #ff0000
+    background-color: #ffffff
+
+/* Name.Namespace */
+.nn
+    color: #{plain}
+
+/* Name.Property */
+.py
+    color: #ff0000
+    background-color: #ffffff
+
+/* Name.Tag */
+.nt
+    color: #ff0000
+    background-color: #ffffff
+
+/* Name.Variable */
+.nv
+    color: #ff0000
+    background-color: #ffffff
+
+/* Operator.Word */
+.ow
+    color: #{dark yellow}
+
+/* Text.Whitespace */
+.w
+    color: #ff0000
+    background-color: #ffffff
+
+/* Literal.Number.Float */
+.mf
+    color: #ff0000
+    background-color: #ffffff
+
+/* Literal.Number.Hex */
+.mh
+    color: #ff0000
+    background-color: #ffffff
+
+/* Literal.Number.Integer */
+.mi
+    color: #{dark red}
+
+/* Literal.Number.Oct */
+.mo
+    color: #ff0000
+    background-color: #ffffff
+
+/* Literal.String.Backtick */
+.sb
+    color: #ff0000
+    background-color: #ffffff
+
+/* Literal.String.Char */
+.sc
+    color: #ff0000
+    background-color: #ffffff
+
+/* Literal.String.Doc */
+.sd
+    color: #ff0000
+    background-color: #ffffff
+
+/* Literal.String.Double */
+.s2
+    color: #ff0000
+    background-color: #ffffff
+
+/* Literal.String.Escape */
+.se
+    color: #{dark magenta}
+
+/* Literal.String.Heredoc */
+.sh
+    color: #dd2200
+    background-color: #fff0f0
+
+/* Literal.String.Interpol */
+.si
+    color: #ff0000
+    background-color: #ffffff
+
+/* Literal.String.Other */
+.sx
+    color: #ff0000
+    background-color: #ffffff
+
+/* Literal.String.Regex */
+.sr
+    color: #ff0000
+    background-color: #ffffff
+
+/* Literal.String.Single */
+.s1
+    color: #ff0000
+    background-color: #ffffff
+
+/* Literal.String.Symbol */
+.ss
+    color: #ff0000
+    background-color: #ffffff
+
+/* Name.Builtin.Pseudo */
+.bp
+    color: #ff0000
+    background-color: #ffffff
+
+/* Name.Variable.Class */
+.vc
+    color: #ff0000
+    background-color: #ffffff
+
+/* Name.Variable.Global */
+.vg
+    color: #ff0000
+    background-color: #ffffff
+
+/* Name.Variable.Instance */
+.vi
+    color: #ff0000
+    background-color: #ffffff
+
+/* Literal.Number.Integer.Long */
+.il
+    color: #ff0000
+    background-color: #ffffff

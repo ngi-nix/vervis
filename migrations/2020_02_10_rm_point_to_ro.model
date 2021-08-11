@@ -1,0 +1,23 @@
+Instance
+    host Host
+
+    UniqueInstance host
+
+RemoteObject
+    instance InstanceId
+    ident    LocalURI
+
+    UniqueRemoteObject instance ident
+
+RemoteMessage
+    author     Int64
+    instance   InstanceId
+    ident      LocalURI
+    identNew   RemoteObjectId
+    rest       Int64
+    create     Int64
+    lostParent FedURI            Maybe
+
+    UniqueRemoteMessageIdent  instance ident
+    UniqueRemoteMessage       rest
+    UniqueRemoteMessageCreate create

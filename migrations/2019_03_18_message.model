@@ -1,0 +1,20 @@
+-- This file is used for generating a Persistent entity for the 2019 Message,
+-- which we use it for the SQL query that moves the author field to a separate
+-- table.
+
+Person
+
+Discussion
+
+Message
+    author  PersonId
+    created UTCTime
+    content Text               -- Assume this is Pandoc Markdown
+    parent  MessageId    Maybe
+    root    DiscussionId
+
+LocalMessage
+    author  PersonId
+    rest    MessageId
+
+    UniqueLocalMessage rest

@@ -1,0 +1,43 @@
+WorkflowField
+    workflow     WorkflowId
+    ident        FldIdent
+    name         Text
+    desc         Text                Maybe
+    type         WorkflowFieldType
+    enm          WorkflowFieldEnumId Maybe
+    required     Bool
+    constant     Bool
+    filterNew    Bool
+    filterTodo   Bool
+    filterClosed Bool
+
+    UniqueWorkflowField workflow ident
+
+WorkflowFieldEnum
+    workflow WorkflowId
+    ident    EnmIdent
+    name     Text
+    desc     Text       Maybe
+
+    UniqueWorkflowFieldEnum workflow ident
+
+WorkflowFieldEnumCtor
+    enum WorkflowFieldEnumId
+    name Text
+    desc Text                Maybe
+
+    UniqueWorkflowFieldEnumCtor enum name
+
+TicketParamText
+    ticket TicketId
+    field  WorkflowFieldId
+    value  Text
+
+    UniqueTicketParamText ticket field
+
+TicketParamEnum
+    ticket TicketId
+    field  WorkflowFieldId
+    value  WorkflowFieldEnumCtorId
+
+    UniqueTicketParamEnum ticket field value
