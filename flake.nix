@@ -15,8 +15,7 @@
 
         jailbreakUnbreak = pkg:
           pkgs.haskell.lib.doJailbreak (pkg.overrideAttrs (_: { meta = { }; }));
-
-        # DON'T FORGET TO PUT YOUR PACKAGE NAME HERE, REMOVING `throw`
+          
         packageName = "vervis";
       in {
         packages.${packageName} =
